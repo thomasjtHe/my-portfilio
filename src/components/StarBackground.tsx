@@ -121,20 +121,20 @@ export const StarBackground = () => {
       y: Math.random() * 80 + 10,
       size: Math.random() * 20 + 80,
       opacity: 0.7,
-      duration: Math.random() * 5000 + 30000,
+      duration: 60000,
     };
   }, []);
 
-
   useEffect(() => {
-    const handleVisibilityChange = () => { 
+    const handleVisibilityChange = () => {
       if (!document.hidden) {
         setTravelingDucks([]);
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
   useEffect(() => {
@@ -147,11 +147,17 @@ export const StarBackground = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
+    const newDuck = createTravelingDuck(Date.now());
     const interval = setInterval(() => {
-      const newDuck = createTravelingDuck(Date.now());
       setTravelingDucks((prev) => [...prev, newDuck]);
       console.log("New traveling duck created:", newDuck);
-    }, 8000);
+    }, 5000);
+
+    // Remove the duck after its duration
+    setTimeout(() => {
+      setTravelingDucks((prev) => prev.filter((duck) => duck.id !== newDuck.id));
+    }, newDuck.duration);
+
     return () => clearInterval(interval);
   }, [createTravelingDuck, travelingDucks.length]);
 
@@ -206,12 +212,11 @@ export const StarBackground = () => {
         return (
           <div
             key={duck.id}
-            className="absolute"
+            className="absolute animate-duck-spin"
             style={{
               left: "-100px",
               top: `${duck.y}%`,
               opacity: duck.opacity,
-              animation: `duck-spin linear forwards ${duck.duration}ms`,
               visibility: isDarkMode ? "visible" : "hidden",
             }}
           >

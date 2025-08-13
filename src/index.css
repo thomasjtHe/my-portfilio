@@ -19,7 +19,7 @@
   --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-wiggle: duck-wiggle 2s ease-in-out infinite;
-  --animate-duck-spin: duck-spin 8s linear forwards;
+  --animate-duck-spin: duck-spin 30s linear forwards;
   
   @keyframes pulse-subtitle {
     0%,
