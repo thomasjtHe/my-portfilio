@@ -34,7 +34,6 @@ type travelingDuckProps = {
   y: number;
   size: number;
   opacity: number;
-  duration: number;
 };
 
 export const StarBackground = () => {
@@ -121,7 +120,6 @@ export const StarBackground = () => {
       y: Math.random() * 80 + 10,
       size: Math.random() * 20 + 80,
       opacity: 0.7,
-      duration: 60000,
     };
   }, []);
 
@@ -147,19 +145,17 @@ export const StarBackground = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
-    const newDuck = createTravelingDuck(Date.now());
     const interval = setInterval(() => {
-      setTravelingDucks((prev) => [...prev, newDuck]);
-      console.log("New traveling duck created:", newDuck);
-    }, 5000);
+    const newDuck = createTravelingDuck(Date.now());
+    setTravelingDucks((prev) => [...prev, newDuck]);
 
-    // Remove the duck after its duration
     setTimeout(() => {
       setTravelingDucks((prev) => prev.filter((duck) => duck.id !== newDuck.id));
-    }, newDuck.duration);
+    }, 60000);
+  }, 5000);
 
     return () => clearInterval(interval);
-  }, [createTravelingDuck, travelingDucks.length]);
+  }, [createTravelingDuck]);
 
   // Handle window resize
   useEffect(() => {

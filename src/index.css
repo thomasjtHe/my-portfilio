@@ -76,17 +76,17 @@
 
 @layer base {
   :root {
-    --border: 214, 32%, 91%;
+    --border: 80, 65%, 65%;
     --background: 80, 72%, 82%;
     --foreground: 222, 47%, 11%;
 
     --primary: 51, 100%, 50%;
     --primary-foreground: 210, 40%, 98%;
-    --card: 0 0%, 0%, 1000%;
+    --card: 80, 63%, 80%;
   }
   .dark {
     --border: 213, 33%, 20%;
-    --background: 222, 47%, 4%;
+    --background: 270 50% 15%;
     --foreground: 213, 31%, 91%;
 
     --primary: 250, 65%, 65%;

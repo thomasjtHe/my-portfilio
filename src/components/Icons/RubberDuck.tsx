@@ -34,7 +34,7 @@ export const RubberDuck = ({
     {/* Duck beak */}
     <ellipse cx="5" cy="9" rx="2" ry="1" fill="#FF8C00" />
     {/* Duck eye */}
-    <circle cx="7" cy="6" r="1" fill="#000" />
+    <circle cx="7" cy="6" r="0.75" fill="#000" />
     {/* Wing detail */}
     <path d="M13 12 Q16 10 17 14 Q15 16 13 14" fill="#FFB000" />
   </svg>
