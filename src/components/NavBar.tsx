@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme, ThemeProvider } from "../hooks/useTheme";
+
 
 export const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -31,14 +34,14 @@ export const NavBar = () => {
         isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-between pr-0">
         <a
-          className="text-xl font-bold text-primary flex items-center"
+          className="text-2xl font-bold text-primary flex items-center"
           href="#home"
         >
           <span>
             {""}
-            <span className="text-glow text-foreground">Duck</span> Portfolio
+            <span className="text-glow text-foreground">My</span> Portfolio
           </span>
         </a>
 
@@ -53,6 +56,20 @@ export const NavBar = () => {
               {item.name}
             </a>
           ))}
+          <div className="mx-4 text-sm font-medium text-foreground/80 pl-10">
+            <ThemeProvider>
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle Theme"
+              >
+                {!isDarkMode ? (
+                  <Sun className="h-6 w-6 text-yellow-300 cursor-pointer hover:text-foreground transition-colors duration-300" />
+                ) : (
+                  <Moon className="h-6 w-6 text-primary cursor-pointer hover:text-foreground transition-colors duration-300" />
+                )}
+              </button>
+            </ThemeProvider>
+          </div>
         </div>
         {/* Mobile */}
         <button onClick={() => setIsOpen((prev) => !prev )} className="md:hidden p-2 text-foreground z-50"
