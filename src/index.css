@@ -95,6 +95,7 @@
   }
   * {
     @apply border-border;
+    transition: border-color 1000ms ease, background-color 300ms ease, color 300ms ease;
   }
 
   html {
@@ -102,9 +103,12 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground transition-colors duration-300 ;
     font-feature-settings: "rlig 1," "calt 1";
   }
+  nav {
+  transition: background-color 300ms ease !important;
+}
 }
 
 @utility container {
