@@ -8,7 +8,7 @@ import { EducationSection } from "../components/EducationSection";
 
 export const Home = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="h-screen bg-background text-foreground overflow-x-hidden overflow-y-auto">
       <ThemeProvider>
         <StarBackground />
         {/* Nav Bar */}

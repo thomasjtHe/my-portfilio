@@ -93,7 +93,7 @@ export const SkillsSection = () => {
 
       <div className="relative flex items-center justify-center mt-40">
         {/* Cards Container */}
-        <div className="relative w-full max-w-6xl mx-auto overflow-hidden px-16">
+        <div className="relative w-full max-w-6xl mx-auto px-16">
           <div
             className="flex items-center transition-transform duration-500 ease-out"
             style={{
