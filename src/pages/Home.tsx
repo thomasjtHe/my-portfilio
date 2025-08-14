@@ -4,20 +4,21 @@ import { HomeSection } from "../components/HomeSection";
 import { ThemeProvider } from "../hooks/useTheme";
 import { AboutSection } from "../components/AboutSection";
 import { SkillsSection } from "../components/SkillsSection";
+import { EducationSection } from "../components/EducationSection";
 
 export const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <ThemeProvider>
         <StarBackground />
+        {/* Nav Bar */}
         <NavBar />
       </ThemeProvider>
-      {/* Nav Bar */}
-      
       {/* Content */}
       <main>
         <HomeSection />
         <AboutSection />
+        <EducationSection />
         <SkillsSection />
       </main>
 
