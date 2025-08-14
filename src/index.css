@@ -20,7 +20,7 @@
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-wiggle: duck-wiggle 2s ease-in-out infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
-  
+
   @keyframes pulse-subtitle {
     0%,
     100% {
@@ -51,14 +51,14 @@
       opacity: 0;
     }
   }
-@keyframes duck-spin {
-  0% {
-    transform: translateX(-100px) rotate(0deg);
+  @keyframes duck-spin {
+    0% {
+      transform: translateX(-100px) rotate(0deg);
+    }
+    100% {
+      transform: translateX(calc(100vw + 100px)) rotate(360deg);
+    }
   }
-  100% {
-    transform: translateX(calc(100vw + 100px)) rotate(360deg);
-  }
-}
 
   @keyframes duck-wiggle {
     0% {
@@ -71,7 +71,6 @@
       transform: rotate(0deg);
     }
   }
-
 }
 
 @layer base {
@@ -95,7 +94,8 @@
   }
   * {
     @apply border-border;
-    transition: border-color 1000ms ease, background-color 300ms ease, color 300ms ease;
+    transition: border-color 1000ms ease, background-color 300ms ease,
+      color 300ms ease;
   }
 
   html {
@@ -103,12 +103,18 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300 ;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply bg-background text-foreground transition-colors duration-300;
     font-feature-settings: "rlig 1," "calt 1";
   }
   nav {
-  transition: background-color 300ms ease !important;
-}
+    transition: background-color 300ms ease !important;
+  }
 }
 
 @utility container {

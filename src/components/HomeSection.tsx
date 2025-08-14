@@ -3,16 +3,18 @@ import { useState, useEffect } from "react";
 
 
 export const HomeSection = () => {
-  const [scrolled, setScrolled] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
+      console.log(scrolled)
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      console.log(scrolled)
     };
   }, []);
   return (

@@ -8,14 +8,14 @@ import { EducationSection } from "../components/EducationSection";
 
 export const Home = () => {
   return (
-    <div className="h-screen bg-background text-foreground overflow-x-hidden overflow-y-auto">
+    <>
       <ThemeProvider>
         <StarBackground />
         {/* Nav Bar */}
         <NavBar />
       </ThemeProvider>
       {/* Content */}
-      <main>
+      <main className="bg-background text-foreground">
         <HomeSection />
         <AboutSection />
         <EducationSection />
@@ -23,6 +23,6 @@ export const Home = () => {
       </main>
 
       {/* Footer */}
-    </div>
+    </>
   );
 };
