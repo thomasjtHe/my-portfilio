@@ -11,12 +11,14 @@ import Earth from "../components/Icons/Earth";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "motion/react";
 
+
 export const Home = () => {
   const [atBottom, setAtBottom] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+      const { scrollTop, clientHeight, scrollHeight } =
+        document.documentElement;
       setAtBottom(scrollTop + clientHeight >= scrollHeight - 1);
     };
 
@@ -38,15 +40,12 @@ export const Home = () => {
         <RoadmapSection />
         <SkillsSection />
         <ProjectSection />
+
         <ContactSection />
       </main>
 
-
-
-{/* Footer */}
-      <AnimatePresence>
-        { atBottom && <Earth />}
-      </AnimatePresence>
+      {/* Footer */}
+      <AnimatePresence>{atBottom && <Earth />}</AnimatePresence>
     </div>
   );
 };

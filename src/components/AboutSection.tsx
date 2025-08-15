@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ArrowBigDown } from "lucide-react";
 import { motion } from "motion/react";
 
+
 export const AboutSection = () => {
   const [scrolled, setScrolled] = useState(true);
 
@@ -32,6 +33,7 @@ export const AboutSection = () => {
         >
           About <span className="text-primary">Me</span>
         </motion.h2>
+  
 
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 items-center text-center gap-8 mt-40"
