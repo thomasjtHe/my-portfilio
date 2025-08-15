@@ -117,7 +117,7 @@ export const StarBackground = () => {
   const createTravelingDuck = useCallback((id: number): travelingDuckProps => {
     return {
       id,
-      y: Math.random() * 80 + 10,
+      y: Math.random() * 60 + 5,
       size: Math.random() * 20 + 80,
       opacity: 0.7,
     };

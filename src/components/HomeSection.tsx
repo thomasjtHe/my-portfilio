@@ -1,4 +1,4 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowBigDown } from "lucide-react";
 import { useState, useEffect } from "react";
 
 
@@ -26,12 +26,15 @@ export const HomeSection = () => {
     </h1>
     <p className="opacity-0 animate-fade-in-delay-2"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, nesciunt.</p>
     <div className="pt-4 opacity-0 animate-fade-in-delay-3">
-      <a className="cosmic-button" href="#projects">View My Projects</a>
     </div>
   </div>
-  <a href="#about" className={`absolute bottom-1.5 ${scrolled ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100'} transition delay-150 duration-300`}>
-    <ArrowDown className=" animate-bounce cursor-pointer"/>
-  </a>
+ 
+  <a href="#about" className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 text-center ${scrolled ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100'} transition delay-150 duration-300`}>
+  <div className="bottom-6 animate-bounce cursor-pointer flex flex-col items-center">
+    Scroll Down to Check More!
+    <ArrowBigDown />
+  </div>
+</a>
   
 </section>
 

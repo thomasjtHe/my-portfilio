@@ -1,29 +1,28 @@
 import { useState, useEffect } from "react";
 import { SkillCard, type MajorSkillProps } from "./SkillCard";
-import { ArrowDown } from "lucide-react";
+import { ArrowBigDown } from "lucide-react";
+import { motion } from "motion/react";
 
 export const SkillsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [scrolled, setScrolled] = useState(true);
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        setScrolled(
-          window.scrollY >
-            (
-              100 +
-              (document.getElementById("home")?.offsetHeight ?? 0) +
-              (document.getElementById("about")?.offsetHeight ?? 0) +
-              (document.getElementById("education")?.offsetHeight ?? 0)
-            )
-        );
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(
+        window.scrollY >
+          100 +
+            (document.getElementById("home")?.offsetHeight ?? 0) +
+            (document.getElementById("about")?.offsetHeight ?? 0) +
+            (document.getElementById("roadmap")?.offsetHeight ?? 0)
+      );
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const majorSkills: MajorSkillProps[] = [
     {
@@ -82,16 +81,27 @@ export const SkillsSection = () => {
   };
 
   const extendedSkills = getExtendedSkills();
-  const baseIndex = majorSkills.length; 
-
+  const baseIndex = majorSkills.length;
 
   return (
     <section id="skills" className="min-h-screen py-24 px-4 relative">
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+      <motion.h2
+        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
         Skills
-      </h2>
+      </motion.h2>
 
-      <div className="relative flex items-center justify-center mt-40">
+      <motion.div
+        className="relative flex items-center justify-center mt-40"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* Cards Container */}
         <div className="relative w-full max-w-6xl mx-auto px-16">
           <div
@@ -124,10 +134,16 @@ export const SkillsSection = () => {
             })}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Indicators */}
-      <div className="flex justify-center mt-8 gap-2">
+      <motion.div
+        className="flex justify-center mt-8 gap-2"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
         {majorSkills.map((_, index) => (
           <button
             key={index}
@@ -153,20 +169,19 @@ export const SkillsSection = () => {
             aria-label={`Go to skill ${index + 1}`}
           />
         ))}
-      </div>
+      </motion.div>
       <div className="flex justify-center mt-20">
         <a
-          href="#skills"
+          href="#projects"
           className={`hidden md:block absolute bottom-1.5 ${
             scrolled
               ? "opacity-0 translate-y-4 pointer-events-none"
               : "opacity-100"
           } transition delay-150 duration-300`}
         >
-          <ArrowDown className=" animate-bounce cursor-pointer" />
+          <ArrowBigDown className=" animate-bounce cursor-pointer" />
         </a>
       </div>
-      
     </section>
   );
 };

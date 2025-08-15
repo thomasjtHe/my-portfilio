@@ -100,6 +100,7 @@
 
   html {
     @apply scroll-smooth;
+    overscroll-behavior: none;
   }
 
   body {
@@ -111,6 +112,7 @@
     color: var(--foreground);
     @apply bg-background text-foreground transition-colors duration-300;
     font-feature-settings: "rlig 1," "calt 1";
+    overscroll-behavior: none;
   }
   nav {
     transition: background-color 300ms ease !important;
@@ -153,7 +155,7 @@
 
 @utility gradient-border {
   @apply relative rounded-md;
-  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
+  background: linear-gradient(to right, hsla(var(--card)), hsl(var(--card)));
   background-clip: padding-box;
   border: 1px solid transparent;
 }
@@ -177,5 +179,4 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
-  text-align: center;
 }
