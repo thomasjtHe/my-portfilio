@@ -2,7 +2,7 @@ import { ArrowBigDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { Duck } from "../components/Duck";
+import { Duck } from "./models/Duck";
 
 export const HomeSection = () => {
   const [scrolled, setScrolled] = useState(false);

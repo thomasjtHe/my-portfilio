@@ -41,7 +41,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
       >
         <div className={`
           bg-background/50 backdrop-blur-sm rounded-xl border border-border p-6 
-          ${isCenter ? 'shadow-2xl border-primary/20 bg-background/70' : 'shadow-lg border-border/50'}
+          ${isCenter ? 'shadow-2xl border-primary/20 bg-card/50 backdrop-blur-sm' : 'shadow-lg border-border/50'}
           ${isCenter ? 'w-72' : 'w-64'}
           transition-all duration-500 ease-out
           ${isCenter ? 'hover:scale-105' : 'hover:scale-95'}
