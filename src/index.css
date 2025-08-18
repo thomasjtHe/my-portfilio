@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -84,18 +85,18 @@
     --card: 80, 63%, 80%;
   }
   .dark {
-    --border: 213, 33%, 20%;
+    --border: 320, 37%, 56%;
     --background: 306 30% 34%;
     --foreground: 213, 31%, 91%;
 
     --primary: 320, 37%, 56%;
     --primary-foreground: 213, 31%, 91%;
-    --card: 222 47% 8%;
+    --card: 300 41% 22%;
   }
   * {
     @apply border-border;
-    transition: border-color 1000ms ease, background-color 300ms ease,
-      color 300ms ease;
+    transition: border-color 1000ms ease, background-color 300ms ease, color 300ms ease;
+     font-family: "WDXL Lubrifont TC", sans-serif;
   }
 
   html {
@@ -116,6 +117,7 @@
   }
   nav {
     transition: background-color 300ms ease !important;
+
   }
 }
 
@@ -145,8 +147,8 @@
 
 @utility subtitle {
   margin-bottom: 3rem;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
   font-weight: 700;
   text-align: center;
   @media (min-width: 768px) {

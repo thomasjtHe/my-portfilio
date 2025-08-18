@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Box3, Vector3, Group } from "three";
 

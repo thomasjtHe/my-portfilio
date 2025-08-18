@@ -40,19 +40,19 @@ export const NavBar = () => {
           className="text-2xl font-bold text-primary flex items-center"
           href="#home"
         >
-          <span className="flex justify-center">
+          <span className="flex justify-center text-4xl">
             {""}
-            <span className="text-glow text-foreground ml-2">My</span> Portfolio
+            <span className="text-glow text-foreground ml-2 ">Thomas</span>He
           </span>
         </a>
 
         {/* Desktop */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex space-x-8 items-end">
           {navItems.map((item, key) => (
             <a
               key={key}
               href={item.href}
-              className="mx-4 text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
+              className="mx-4 text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
             >
               {item.name}
             </a>

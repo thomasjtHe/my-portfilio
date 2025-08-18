@@ -36,12 +36,12 @@ export const HomeSection = () => {
     >
       <div className="container max-w-xl mx-auto text-center z-10">
         <h1 className="text-center text-4xl md:text-6xl font-bold tracking-tight rounded-2xl">
-          <span className="opacity-0 animate-fade-in">Hi, I'm </span>
+          <span className="opacity-0 animate-fade-in">Hi, I 'm </span>
           <span className="text-primary opacity-0 animate-fade-in-delay-1">
             Thomas He
           </span>
         </h1>
-        <p className="opacity-0 animate-fade-in-delay-2">
+        <p className="opacity-0 animate-fade-in-delay-2 text-xl">
           {" "}
           I make Techy and Goofy stuff
         </p>
