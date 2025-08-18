@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowBigDown } from "lucide-react";
 import { motion } from "motion/react";
-import { ProjectCard, type ProjectProps } from "./ProjectCard";
+import { ProjectCard, type ProjectProps } from "../cards/ProjectCard";
 
 export const ProjectSection = () => {
   const [scrolled, setScrolled] = useState(true);
@@ -68,7 +68,7 @@ export const ProjectSection = () => {
   return (
     <section id="projects" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        className="subtitle"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}

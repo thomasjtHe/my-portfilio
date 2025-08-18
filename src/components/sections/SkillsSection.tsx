@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { SkillCard, type MajorSkillProps } from "./SkillCard";
+import { SkillCard, type MajorSkillProps } from "../cards/SkillCard";
 import { ArrowBigDown } from "lucide-react";
 import { motion } from "motion/react";
 

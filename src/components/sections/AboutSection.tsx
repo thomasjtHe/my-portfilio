@@ -25,7 +25,7 @@ export const AboutSection = () => {
       {""}
       <div className="container mx-auto max-w-5xl">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          className="subtitle"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}

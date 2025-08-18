@@ -3,24 +3,53 @@ import { SiGmail } from "react-icons/si";
 import { motion } from "motion/react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { ContactDuck } from "./models/ContactDuck";
-import { useState, useEffect } from "react";
+import { ContactDuck } from "../models/ContactDuck";
+import { useState, useEffect, useMemo } from "react";
+import { AnimatePresence } from "motion/react";
+import Earth from "../Icons/Earth";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
   const [duckVisible, setDuckVisible] = useState(false);
+  const [atBottom, setAtBottom] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } =
+        document.documentElement;
+      setAtBottom(scrollTop + clientHeight >= scrollHeight - 1);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   useEffect(() => {
     if (!duckLoading) {
-      // Delay to allow loading overlay to fade out
       setTimeout(() => setDuckVisible(true), 100); // optional small delay
     }
   }, [duckLoading]);
 
+    const canvasComponent = useMemo(() => (
+    <Canvas camera={{ position: [0.8, 0.7, 0.4], fov: 45 }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[3, 5, 2]} intensity={0.5} />
+      <ContactDuck scale={1.2} onLoad={() => setDuckLoading(false)} />
+      <OrbitControls
+        target={[0, 0.5, 0]}
+        minDistance={2}
+        maxDistance={4}
+        enableZoom={false}
+      />
+      <Environment preset="sunset" />
+    </Canvas>
+  ), [duckLoading]); 
+
   return (
     <section id="contact" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        className="subtitle"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
@@ -29,9 +58,7 @@ export const ContactSection = () => {
         Contact Me
       </motion.h2>
 
-      <div className="container mx-auto h-[70vh] grid grid-rows-2 gap-8">
-        {/* Contact Information - Hover Tabs */}
-        {/* Duck Canvas - Takes up half the viewport height and centers the duck */}
+      <div className="container mx-auto h-[70vh] grid grid-rows-[2fr_1fr] gap-8">
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">
           {/* Loading Overlay with Spinner */}
           <div
@@ -41,7 +68,6 @@ export const ContactSection = () => {
                 : "opacity-0 pointer-events-none"
             }`}
           >
-            {/* SVG Loading Ring Spinner */}
             <svg
               className="animate-spin h-12 w-12 text-primary"
               viewBox="0 0 24 24"
@@ -62,26 +88,49 @@ export const ContactSection = () => {
               ></path>
             </svg>
           </div>
-          {/* Fade-in Duck Canvas */}
+
+          {/* Full Canvas */}
           <div
             className={`w-full h-full transition-opacity duration-300 ${
               duckVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Canvas camera={{ position: [1, 0, 0.5], fov: 40 }}>
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[3, 5, 2]} intensity={0.5} />
-              <ContactDuck scale={1} onLoad={() => setDuckLoading(false)} />
-              <OrbitControls
-                target={[0, 0.5, 0]}
-                minDistance={3}
-                maxDistance={6}
-              />
-              <Environment preset="sunset" />
-            </Canvas>
+            {canvasComponent}
+          </div>
+
+          {/* Blocking overlay with circular hole */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Top rectangle */}
+            <div
+              className="absolute top-0 left-0 right-0 pointer-events-auto bg-transparent"
+              style={{ height: "calc(50% - 128px)" }}
+            ></div>
+            {/* Bottom rectangle */}
+            <div
+              className="absolute bottom-0 left-0 right-0 pointer-events-auto bg-transparent"
+              style={{ height: "calc(50% - 128px)" }}
+            ></div>
+            {/* Left rectangle */}
+            <div
+              className="absolute left-0 pointer-events-auto bg-transparent"
+              style={{
+                top: "calc(50% - 128px)",
+                width: "calc(50% - 128px)",
+                height: "256px",
+              }}
+            ></div>
+            {/* Right rectangle */}
+            <div
+              className="absolute right-0 pointer-events-auto bg-transparent"
+              style={{
+                top: "calc(50% - 128px)",
+                width: "calc(50% - 128px)",
+                height: "256px",
+              }}
+            ></div>
           </div>
         </div>
-        <div className="flex flex-row justify-center items-center gap-6 pl-8">
+        <div className="flex flex-row justify-center items-center gap-6">
           {/* Gmail Tab */}
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
@@ -150,6 +199,7 @@ export const ContactSection = () => {
           </div>
         </div>
       </div>
+      <AnimatePresence>{atBottom && <Earth />}</AnimatePresence>
     </section>
   );
 };

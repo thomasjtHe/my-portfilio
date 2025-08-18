@@ -76,19 +76,19 @@
 @layer base {
   :root {
     --border: 80, 65%, 65%;
-    --background: 80, 72%, 82%;
-    --foreground: 222, 47%, 11%;
+    --background: 209, 13%, 86%;
+    --foreground: 220, 18%, 26%;
 
-    --primary: 51, 100%, 50%;
+    --primary: 45, 68%, 60%;
     --primary-foreground: 210, 40%, 98%;
     --card: 80, 63%, 80%;
   }
   .dark {
     --border: 213, 33%, 20%;
-    --background: 270 50% 15%;
+    --background: 306 30% 34%;
     --foreground: 213, 31%, 91%;
 
-    --primary: 250, 65%, 65%;
+    --primary: 320, 37%, 56%;
     --primary-foreground: 213, 31%, 91%;
     --card: 222 47% 8%;
   }
@@ -121,7 +121,6 @@
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
 
   @media (width >= 640px) {
     max-width: 640px;
@@ -141,6 +140,18 @@
 
   @media (width >= 1536px) {
     max-width: 1536px;
+  }
+}
+
+@utility subtitle {
+  margin-bottom: 3rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 

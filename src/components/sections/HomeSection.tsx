@@ -2,7 +2,7 @@ import { ArrowBigDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { Duck } from "./models/Duck";
+import { Duck } from "../models/Duck";
 
 export const HomeSection = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -38,13 +38,12 @@ export const HomeSection = () => {
         <h1 className="text-center text-4xl md:text-6xl font-bold tracking-tight rounded-2xl">
           <span className="opacity-0 animate-fade-in">Hi, I'm </span>
           <span className="text-primary opacity-0 animate-fade-in-delay-1">
-            CCDUCK
+            Thomas He
           </span>
         </h1>
         <p className="opacity-0 animate-fade-in-delay-2">
           {" "}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-          nesciunt.
+          I make Techy and Goofy stuff
         </p>
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">
           {/* Loading Overlay with Spinner */}
@@ -84,7 +83,7 @@ export const HomeSection = () => {
               <ambientLight intensity={0.5} />
               <directionalLight position={[3, 5, 2]} intensity={0.5} />
               <Duck scale={1} onLoad={() => setDuckLoading(false)} />
-              <OrbitControls target={[0, 0.5, 0]} minDistance={3} maxDistance={6} />
+              <OrbitControls target={[0, 0.5, 0]} minDistance={3} maxDistance={6} enableZoom={false} />
               <Environment preset="sunset" />
             </Canvas>
           </div>
@@ -100,7 +99,7 @@ export const HomeSection = () => {
         } transition delay-150 duration-300`}
       >
         <div className="bottom-6 animate-bounce cursor-pointer flex flex-col items-center">
-          Scroll Down to Check More!
+          Scroll Down to Learn More!
           <ArrowBigDown />
         </div>
       </a>

@@ -40,9 +40,9 @@ export const NavBar = () => {
           className="text-2xl font-bold text-primary flex items-center"
           href="#home"
         >
-          <span>
+          <span className="flex justify-center">
             {""}
-            <span className="text-glow text-foreground">My</span> Portfolio
+            <span className="text-glow text-foreground ml-2">My</span> Portfolio
           </span>
         </a>
 

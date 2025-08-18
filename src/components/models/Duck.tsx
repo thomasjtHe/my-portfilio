@@ -9,7 +9,7 @@ interface DuckProps {
 }
 
 export function Duck({ scale = 1, position = [0, 0, 0], onLoad }: DuckProps) {
-  const { scene } = useGLTF("/models/duck/scene.gltf") as {
+  const { scene } = useGLTF("/models/HomeDuck/scene.gltf") as {
     scene: Group;
   };
 
@@ -29,4 +29,4 @@ export function Duck({ scale = 1, position = [0, 0, 0], onLoad }: DuckProps) {
   return <primitive object={scene} scale={scale} position={position} />;
 }
 
-useGLTF.preload("/models/duck/scene.gltf");
+useGLTF.preload("/models/HomeDuck/scene.gltf");

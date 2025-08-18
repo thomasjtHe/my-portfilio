@@ -13,7 +13,7 @@ export default function Earth({
       className="fixed bottom-0 left-0 w-full flex justify-center pointer-events-none"
     >
       <svg
-        viewBox="0 -20 800 400"
+        viewBox="0 -25 800 400"
         xmlns="http://www.w3.org/2000/svg"
         width={width}
         height={height}
