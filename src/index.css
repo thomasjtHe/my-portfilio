@@ -16,11 +16,11 @@
   --animate-fade-in: fade-in 0.7s ease-out forwards;
   --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
   --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
-  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
-  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
+  --animate-blur-in: blur-in 0.8s ease-out forwards;
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-wiggle: duck-wiggle 2s ease-in-out infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
+
 
   @keyframes pulse-subtitle {
     0%,
@@ -31,6 +31,16 @@
       opacity: 0.8;
     }
   }
+  @keyframes blur-in {
+  0% {
+    filter: blur(8px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
   @keyframes fade-in {
     from {
       opacity: 0;

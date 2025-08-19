@@ -32,7 +32,7 @@ export const ContactSection = () => {
   }, [duckLoading]);
 
     const canvasComponent = useMemo(() => (
-    <Canvas camera={{ position: [0.8, 0.7, 0.4], fov: 45 }}>
+    <Canvas camera={{ position: [0.8, 0.7, 0.4], fov: 50 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[3, 5, 2]} intensity={0.5} />
       <ContactDuck scale={1.2} onLoad={() => setDuckLoading(false)} />
@@ -140,9 +140,9 @@ export const ContactSection = () => {
               </div>
 
               {/* Expandable content */}
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-64">
+              <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
-                  <span className="text-md">github.com/yourusername</span>
+                  <span className="text-md">thomashe42@gmail.com</span>
                 </div>
               </div>
             </div>
@@ -157,9 +157,9 @@ export const ContactSection = () => {
               </div>
 
               {/* Expandable content */}
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-64">
+              <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
-                  <span className="text-md">github.com/yourusername</span>
+                  <a href="https://github.com/thomasjtHe" target="_blank" className="text-md hover:underline">github.com/thomasjtHe</a>
                 </div>
               </div>
             </div>
@@ -174,9 +174,9 @@ export const ContactSection = () => {
               </div>
 
               {/* Expandable content */}
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-64">
+              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-72 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
-                  <span className="text-md">github.com/yourusername</span>
+                  <a href="https://www.linkedin.com/in/thomas-he-8ba66336a" target="_blank" className="text-md hover:underline">www.linkedin.com/in/thomas-he-8ba66336a</a>
                 </div>
               </div>
             </div>
@@ -190,9 +190,9 @@ export const ContactSection = () => {
               </div>
 
               {/* Expandable content */}
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-64">
-                <div className="pr-6 whitespace-nowrap">
-                  <span className="text-md">github.com/yourusername</span>
+              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-32 group-hover:animate-blur-in">
+                <div className="pr-6 whitespace-nowrap text-center">
+                  <span className="text-md">chillaxx</span>
                 </div>
               </div>
             </div>

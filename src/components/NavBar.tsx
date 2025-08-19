@@ -41,8 +41,7 @@ export const NavBar = () => {
           href="#home"
         >
           <span className="flex justify-center text-4xl">
-            {""}
-            <span className="text-glow text-foreground ml-2 ">Thomas</span>He
+            <span className="text-glow text-foreground mr-2 ">Thomas</span>{" "} He
           </span>
         </a>
 
