@@ -1,5 +1,22 @@
 import { useState, useEffect } from "react";
-import { ArrowBigDown, BrainCog, BrickWallShield, Lightbulb, Github, Computer, Code, FileJson } from "lucide-react";
+import {
+  ArrowBigDown,
+  BrainCog,
+  BrickWallShield,
+  Lightbulb,
+  Github,
+  Computer,
+  Code,
+  FileJson,
+  Waypoints,
+  Presentation,
+  Users,
+  ChartGantt,
+  Keyboard,
+  Workflow,
+  Brain,
+  MapPinned
+} from "lucide-react";
 import {
   VerticalTimelineElement,
   VerticalTimeline,
@@ -8,6 +25,7 @@ import "react-vertical-timeline-component/style.min.css";
 
 export const RoadmapSection = () => {
   const [scrolled, setScrolled] = useState(true);
+  const [showIcon, setShowIcon] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,11 +41,40 @@ export const RoadmapSection = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowIcon((prev) => !prev);
+    }, 3330);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="roadmap" className="min-h-screen py-24 px-4 relative">
-      <h2 className="subtitle">Roadmap</h2>
+      <h2 className="subtitle">
+        <span className="relative flex items-center justify-center overflow-hidden h-12">
+          <span
+            className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+            style={{
+              transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+            }}
+          >
+            <MapPinned className="h-10 w-10" />
+          </span>
+          <span
+            className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+            style={{
+              transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+            }}
+          >
+            Roadmap
+          </span>
+          <span className="invisible">Roadmap</span>
+        </span>
+      </h2>
       <VerticalTimeline
-        className="vertical-timeline--education"
+        className="vertical-timeline--education top-10"
         lineColor={`hsl(var(--foreground))`}
       >
         <VerticalTimelineElement
@@ -39,21 +86,24 @@ export const RoadmapSection = () => {
           date="Now"
           iconStyle={{
             background: `hsl(var(--card))`,
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             color: "#fff",
           }}
-          icon={<span className="text-4xl" role="img" aria-label="hugging-face">
-      🤗
-    </span>}
+          icon={
+            <span className="text-4xl" role="img" aria-label="hugging-face">
+              🤗
+            </span>
+          }
         >
           <h3 className="vertical-timeline-element-title font-bold text-2xl">
-            Open to Work 
+            Open to Work
           </h3>
-          <p>
-            Seeking IT related job opportunities while taking the professional year program to gain experiences.
-          </p>
+          <div className="text-xl mt-2"> 
+            Seeking IT related job opportunities while taking the professional
+            year program to gain experiences.
+          </div>
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element text-foreground"
@@ -64,9 +114,9 @@ export const RoadmapSection = () => {
           date="July 2024 - December 2024"
           iconStyle={{
             background: `hsl(var(--card))`,
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             color: "#fff",
           }}
           icon={<img src="/src/assets/qs.png" className="w-10 h-10" />}
@@ -77,9 +127,28 @@ export const RoadmapSection = () => {
           <h4 className="vertical-timeline-element-subtitle font-semibold text-xl">
             Queue Solutions
           </h4>
-          <p>
-            Focused on software development, algorithms, and data structures.
-          </p>
+          <ul className="list-disc space-y-2 text-xl mt-2">
+            <li>
+              Hired to work on Motivational Model Editor, an app built using
+              React, TypeScript and Bootstrap{" "}
+              <Keyboard className="mx-1 inline" />
+            </li>
+            <li>
+              Mainly worked by requirements from supervisors, but also made a
+              few satisfying user interface design by myself
+              <Brain className="mx-1 inline" />
+            </li>
+            <li>
+              Worked in Agile workflow where frquent, active and professional
+              discussions were just as important as effective documentation
+              using professional tools such as Slack, Trello and Jira
+              <Workflow className="mx-1 inline" />{" "}
+            </li>
+            <li>
+              Also responsible for version control in managing commits of
+              different branches <Github className="mx-1 inline" />
+            </li>
+          </ul>
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element text-foreground"
@@ -97,14 +166,27 @@ export const RoadmapSection = () => {
           <h4 className="vertical-timeline-element-subtitle font-semibold text-xl">
             University of Melbourne
           </h4>
-          <p>
-            <ul className="list-disc space-y-2">
-              <li>Machine Learning<BrainCog className="mx-1 inline"/>: Computer Vision, Natural Language Processing</li>
-              <li>Cyber Security<BrickWallShield className="mx-1 inline"/>: Encryption & Decription Algorithms and Standards</li>
-              <li>Innovation Project<Lightbulb className="mx-1 inline"/>: Mobile Application for Reduce Waste on Foods</li>
-              <li>Software Development Models and Design Methods<Github className="mx-1 inline"/>: Agile, Formal, etc.</li>
-            </ul>
-          </p>
+          <ul className="list-disc space-y-2 text-xl mt-2">
+            <li>
+              Machine Learning
+              <BrainCog className="mx-1 inline" />: Computer Vision, Natural
+              Language Processing
+            </li>
+            <li>
+              Cyber Security
+              <BrickWallShield className="mx-1 inline" />: Encryption &
+              Decription Algorithms and Standards
+            </li>
+            <li>
+              Innovation Project
+              <Lightbulb className="mx-1 inline" />: Mobile Application for
+              Reduce Waste on Foods
+            </li>
+            <li>
+              Software Development Models and Design Methods
+              <ChartGantt className="mx-1 inline" />: Agile, Formal, etc.
+            </li>
+          </ul>
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element text-foreground"
@@ -120,11 +202,26 @@ export const RoadmapSection = () => {
             Algorithms in Action
           </h3>
           <h4 className="vertical-timeline-element-subtitle font-semibold text-xl">
-            Product Owner
+            Web Dev Intern
           </h4>
-          <p>
-            Focused on software development, algorithms, and data structures.
-          </p>
+
+          <ul className="list-disc space-y-2 text-xl mt-2">
+            <li>
+              Dedicated in developing an application using React to demonstrate
+              how searching algorithms work to students{" "}
+              <Presentation className="mx-1 inline" />
+            </li>
+            <li>
+              Worked on visualizing alogorithms including Dijkstra, Breath First
+              Search, Depth First Search where users can customize the nodes and
+              paths <Waypoints className="mx-1 inline" />{" "}
+            </li>
+            <li>
+              Also played the role of product owner, who was responsible for
+              arranging meetings and bridging the clients with the team{" "}
+              <Users className="mx-1 inline" />{" "}
+            </li>
+          </ul>
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element text-foreground"
@@ -142,13 +239,19 @@ export const RoadmapSection = () => {
           <h4 className="vertical-timeline-element-subtitle font-semibold text-xl">
             University of Melbourne
           </h4>
-          <p>
-            <ul className="list-disc space-y-2">
-              <li>Computer Fundamentals <Computer className="mx-1 inline"/>: OS, Data Structure, Web, Hardware</li>
-              <li>Coding and Dev Basics <Code className="mx-1 inline" /> </li>
-              <li>Data Analysis and Database Systems <FileJson className="mx-1 inline" /> </li>
-            </ul>
-          </p>
+          <ul className="list-disc space-y-2 text-xl mt-2">
+            <li>
+              Computer Fundamentals <Computer className="mx-1 inline" />: OS,
+              Data Structure, Web, Hardware
+            </li>
+            <li>
+              Coding and Dev Basics <Code className="mx-1 inline" />{" "}
+            </li>
+            <li>
+              Data Analysis and Database Systems{" "}
+              <FileJson className="mx-1 inline" />{" "}
+            </li>
+          </ul>
         </VerticalTimelineElement>
       </VerticalTimeline>
 
