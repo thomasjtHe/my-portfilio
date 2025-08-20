@@ -35,28 +35,8 @@ export const NavBar = () => {
         isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
       )}
     >
-      <div className="container flex items-center justify-between pr-0">
-        <a
-          className="text-2xl font-bold text-primary flex items-center"
-          href="#home"
-        >
-          <span className="flex justify-center text-4xl">
-            <span className="text-glow text-foreground mr-2 ">Thomas</span>{" "} He
-          </span>
-        </a>
-
-        {/* Desktop */}
-        <div className="hidden md:flex space-x-8 items-end">
-          {navItems.map((item, key) => (
-            <a
-              key={key}
-              href={item.href}
-              className="mx-4 text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
-            >
-              {item.name}
-            </a>
-          ))}
-          <div className="mx-4 text-sm font-medium text-foreground/80 pl-10">
+      <div className="container flex items-center justify-between">
+                <div className="text-sm font-medium text-foreground/80">
             <ThemeProvider>
               <button
                 onClick={toggleTheme}
@@ -70,6 +50,18 @@ export const NavBar = () => {
               </button>
             </ThemeProvider>
           </div>
+
+        {/* Desktop */}
+        <div className="hidden md:flex space-x-8 items-end">
+          {navItems.map((item, key) => (
+            <a
+              key={key}
+              href={item.href}
+              className="mx-4 text-lg font-medium text-foreground/80 hover:text-primary transition-colors duration-300"
+            >
+              {item.name}
+            </a>
+          ))}
         </div>
         {/* Mobile */}
         <button onClick={() => setIsOpen((prev) => !prev )} className="md:hidden p-2 text-foreground z-50"

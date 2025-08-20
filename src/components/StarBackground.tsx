@@ -93,7 +93,6 @@ export const StarBackground = () => {
       const row = Math.floor(i / ducksPerRow);
       const col = i % ducksPerRow;
 
-      // Calculate position with padding
       const x =
         ((col * totalDuckSize + padding + duckSize / 2) / window.innerWidth) *
         100;
@@ -105,7 +104,7 @@ export const StarBackground = () => {
         id: i,
         x: x,
         y: y,
-        size: Math.random() * 20 + 80,
+        size: Math.random() * 40 + 60,
         opacity: 0.2,
         delay: Math.random() * 1000,
       });

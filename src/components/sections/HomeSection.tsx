@@ -43,7 +43,7 @@ export const HomeSection = () => {
         </h1>
         <p className="opacity-0 animate-fade-in-delay-2 text-xl">
           {" "}
-          I make Techy and Goofy stuff
+          I make <span className="text-primary">Geeky</span> and <span className="text-primary">Goofy</span> stuff
         </p>
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">
           {/* Loading Overlay with Spinner */}

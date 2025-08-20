@@ -55,7 +55,7 @@ export const ContactSection = () => {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.8 }}
       >
-        Contact Me
+        Contact <span className="text-primary">Me</span>
       </motion.h2>
 
       <div className="container mx-auto h-[70vh] grid grid-rows-[2fr_1fr] gap-8">

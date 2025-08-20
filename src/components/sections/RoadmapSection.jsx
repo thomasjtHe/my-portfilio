@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowBigDown } from "lucide-react";
+import { ArrowBigDown, BrainCog, BrickWallShield, Lightbulb, Github, Computer, Code, FileJson } from "lucide-react";
 import {
   VerticalTimelineElement,
   VerticalTimeline,
@@ -98,7 +98,12 @@ export const RoadmapSection = () => {
             University of Melbourne
           </h4>
           <p>
-            Focused on software development, algorithms, and data structures.
+            <ul className="list-disc space-y-2">
+              <li>Machine Learning<BrainCog className="mx-1 inline"/>: Computer Vision, Natural Language Processing</li>
+              <li>Cyber Security<BrickWallShield className="mx-1 inline"/>: Encryption & Decription Algorithms and Standards</li>
+              <li>Innovation Project<Lightbulb className="mx-1 inline"/>: Mobile Application for Reduce Waste on Foods</li>
+              <li>Software Development Models and Design Methods<Github className="mx-1 inline"/>: Agile, Formal, etc.</li>
+            </ul>
           </p>
         </VerticalTimelineElement>
         <VerticalTimelineElement
@@ -115,7 +120,7 @@ export const RoadmapSection = () => {
             Algorithms in Action
           </h3>
           <h4 className="vertical-timeline-element-subtitle font-semibold text-xl">
-            University of Melbourne
+            Product Owner
           </h4>
           <p>
             Focused on software development, algorithms, and data structures.
@@ -138,7 +143,11 @@ export const RoadmapSection = () => {
             University of Melbourne
           </h4>
           <p>
-            Focused on software development, algorithms, and data structures.
+            <ul className="list-disc space-y-2">
+              <li>Computer Fundamentals <Computer className="mx-1 inline"/>: OS, Data Structure, Web, Hardware</li>
+              <li>Coding and Dev Basics <Code className="mx-1 inline" /> </li>
+              <li>Data Analysis and Database Systems <FileJson className="mx-1 inline" /> </li>
+            </ul>
           </p>
         </VerticalTimelineElement>
       </VerticalTimeline>
