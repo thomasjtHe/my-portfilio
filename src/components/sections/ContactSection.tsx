@@ -7,11 +7,20 @@ import { ContactDuck } from "../models/ContactDuck";
 import { useState, useEffect, useMemo } from "react";
 import { AnimatePresence } from "motion/react";
 import Earth from "../Icons/Earth";
+import { PhoneIncoming } from "lucide-react";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
   const [duckVisible, setDuckVisible] = useState(false);
   const [atBottom, setAtBottom] = useState(false);
+  const [showIcon, setShowIcon] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowIcon((prev) => !prev);
+    }, 3330);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,14 +58,35 @@ export const ContactSection = () => {
   return (
     <section id="contact" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-        className="subtitle"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8 }}
-      >
-        Contact <span className="text-primary">Me</span>
-      </motion.h2>
+          className="text-3xl md:text-4xl font-bold text-center mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="relative flex items-center justify-center overflow-hidden h-12">
+            <span
+              className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+              style={{
+                transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+              }}
+            >
+              <PhoneIncoming className="h-8 w-8" />
+            </span>
+            <span
+              className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+              style={{
+                transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+              }}
+            >
+              Contact
+            </span>
+            <span className="inline items-center justify-center ">
+              <span className="invisible mr-14">Contact</span>
+              <span className="ml-3 text-primary">Me</span>
+            </span>
+          </span>
+        </motion.h2>
 
       <div className="container mx-auto h-[70vh] grid grid-rows-[2fr_1fr] gap-8">
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">

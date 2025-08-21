@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
-import { ArrowBigDown } from "lucide-react";
+import { ArrowBigDown, Presentation } from "lucide-react";
 import { motion } from "motion/react";
 import { ProjectCard, type ProjectProps } from "../cards/ProjectCard";
 
 export const ProjectSection = () => {
   const [scrolled, setScrolled] = useState(true);
+    const [showIcon, setShowIcon] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowIcon((prev) => !prev);
+    }, 3330);
+    return () => clearInterval(interval);
+  }, []);
   const projects: ProjectProps[] = [
     {
       name: "Project Alpha",
@@ -68,14 +76,32 @@ export const ProjectSection = () => {
   return (
     <section id="projects" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-        className="subtitle"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8 }}
-      >
-        Projects
-      </motion.h2>
+                    className="text-3xl md:text-4xl font-bold text-center mb-12"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8 }}
+                  >
+              <span className="relative flex items-center justify-center overflow-hidden h-12">
+                <span
+                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+                  style={{
+                    transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+                  }}
+                >
+                  <Presentation className="h-10 w-10" />
+                </span>
+                <span
+                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+                  style={{
+                    transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+                  }}
+                >
+                  Projects
+                </span>
+                <span className="invisible">Projects</span>
+              </span>
+            </motion.h2>
       <div className="flex justify-center">
         <motion.div
           className="relative grid grid-cols-3 items-center"

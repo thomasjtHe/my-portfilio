@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { SkillCard, type MajorSkillProps } from "../cards/SkillCard";
-import { ArrowBigDown } from "lucide-react";
+import { ArrowBigDown, Hammer } from "lucide-react";
 import { motion } from "motion/react";
 
 export const SkillsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [scrolled, setScrolled] = useState(true);
+  const [showIcon, setShowIcon] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowIcon((prev) => !prev);
+    }, 3330);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,56 +30,107 @@ export const SkillsSection = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
 
   const majorSkills: MajorSkillProps[] = [
     {
       id: 1,
       name: "Web Development",
       description: "Building responsive and interactive web applications.",
-      imageSrc: "/images/web-development.png",
+      imageSrc: "/src/assets/webDev.svg",
       minorSkills: [
-        { id: 1, name: "HTML", imageSrc: "/images/html.png" },
-        { id: 2, name: "CSS", imageSrc: "/images/css.png" },
-        { id: 3, name: "JavaScript", imageSrc: "/images/javascript.png" },
-        { id: 4, name: "React", imageSrc: "/images/react.png" },
+        { id: 1, name: "HTML", imageSrc: "/src/assets/html.png" },
+        { id: 2, name: "CSS", imageSrc: "/src/assets/css.png" },
+        { id: 3, name: "JavaScript", imageSrc: "/src/assets/js.png" },
+        { id: 4, name: "TypeScript", imageSrc: "/src/assets/ts.png" },
+        { id: 5, name: "React", imageSrc: "/src/assets/react.svg" },
+        { id: 6, name: "npm", imageSrc: "/src/assets/npm.png" },
+        { id: 7, name: "Tailwind", imageSrc: "/src/assets/tailwind.png" },
+        { id: 8, name: "Bootstrap", imageSrc: "/src/assets/bs.png" },
+        { id: 9, name: "Vite", imageSrc: "/src/assets/vite.svg" },
+        {
+          id: 10,
+          name: "React Native",
+          imageSrc: "/src/assets/reactNative.svg",
+        },
+        { id: 11, name: "Three.js", imageSrc: "/src/assets/3js.png" },
+        { id: 12, name: "Material UI", imageSrc: "/src/assets/mui.svg" },
       ],
     },
     {
       id: 2,
-      name: "Backend Development",
-      description: "Creating robust server-side applications.",
-      imageSrc: "/images/backend-development.png",
+      name: "DevOps",
+      description:
+        "Implementing CI/CD pipelines, source control and documentation.",
+      imageSrc: "/src/assets/devops.png",
       minorSkills: [
-        { id: 1, name: "Node.js", imageSrc: "/images/nodejs.png" },
-        { id: 2, name: "Express.js", imageSrc: "/images/express.png" },
-        { id: 3, name: "MongoDB", imageSrc: "/images/mongodb.png" },
-        { id: 4, name: "SQL", imageSrc: "/images/sql.png" },
+        { id: 1, name: "Git", imageSrc: "/src/assets/git.png" },
+        { id: 2, name: "Github", imageSrc: "/src/assets/github.svg" },
+        { id: 3, name: "Jira", imageSrc: "/src/assets/jira.svg" },
+        { id: 4, name: "Slack", imageSrc: "/src/assets/slack.svg" },
       ],
     },
     {
       id: 3,
-      name: "DevOps",
+      name: "Data Analytics",
       description:
-        "Implementing CI/CD pipelines and managing cloud infrastructure.",
-      imageSrc: "/images/devops.png",
+        "Manipulate and analyze data, obtain knowledge from information.",
+      imageSrc: "/src/assets/da.svg",
       minorSkills: [
-        { id: 1, name: "Docker", imageSrc: "/images/docker.png" },
-        { id: 2, name: "Kubernetes", imageSrc: "/images/kubernetes.png" },
-        { id: 3, name: "AWS", imageSrc: "/images/aws.png" },
-        { id: 4, name: "CI/CD", imageSrc: "/images/cicd.png" },
+        { id: 1, name: "Python", imageSrc: "/src/assets/python.svg" },
+        {
+          id: 2,
+          name: "Pandas",
+          imageSrc:
+            "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg",
+        },
+        { id: 3, name: "NumPy", imageSrc: "/src/assets/numpy.svg" },
+        {
+          id: 4,
+          name: "Matplotlib",
+          imageSrc:
+            "https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg",
+        },
+        { id: 5, name: "Seaborn", imageSrc: "/src/assets/seaborn.svg" },
+        {
+          id: 6,
+          name: "Scikit-learn",
+          imageSrc: "/src/assets/scikitLearn.svg",
+        },
+        { id: 7, name: "MySQL", imageSrc: "/src/assets/mysql.svg" },
+        {
+          id: 8,
+          name: "MS Excel",
+          imageSrc:
+            "https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg",
+        },
       ],
     },
     {
       id: 4,
-      name: "Mobile Development",
-      description: "Creating mobile applications for iOS and Android.",
-      imageSrc: "/images/mobile-development.png",
+      name: "Machine Learning",
+      description:
+        "Build generative or predictive models to perform tasks autonomously.",
+      imageSrc: "/src/assets/ml.svg",
       minorSkills: [
-        { id: 1, name: "React Native", imageSrc: "/images/react-native.png" },
-        { id: 2, name: "Flutter", imageSrc: "/images/flutter.png" },
-        { id: 3, name: "Swift", imageSrc: "/images/swift.png" },
-        { id: 4, name: "Kotlin", imageSrc: "/images/kotlin.png" },
+        { id: 1, name: "Python", imageSrc: "/src/assets/python.svg" },
+        {
+          id: 2,
+          name: "Pandas",
+          imageSrc:
+            "https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg",
+        },
+        {
+          id: 3,
+          name: "Scikit-learn",
+          imageSrc: "/src/assets/scikitLearn.svg",
+        },
+        { id: 4, name: "PyTorch", imageSrc: "/src/assets/pytorch.svg" },
+        { id: 5, name: "TensorFlow", imageSrc: "/src/assets/tf.svg" },
+        { id: 6, name: "Keras", imageSrc: "/src/assets/Keras.svg" },
+        { id: 7, name: "OpenCV", imageSrc: "/src/assets/opencv.svg" },
+        { id: 8, name: "NLTK", imageSrc: "/src/assets/nltk.png" },
+        { id: 9, name: "Hugging Face", imageSrc: "/src/assets/hf.svg" },
       ],
     },
   ];
@@ -86,14 +145,32 @@ export const SkillsSection = () => {
   return (
     <section id="skills" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-center mb-12"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.8 }}
-      >
-        Skills
-      </motion.h2>
+                    className="text-3xl md:text-4xl font-bold text-center mb-12"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8 }}
+                  >
+              <span className="relative flex items-center justify-center overflow-hidden h-12">
+                <span
+                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+                  style={{
+                    transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+                  }}
+                >
+                  <Hammer className="h-10 w-10" />
+                </span>
+                <span
+                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+                  style={{
+                    transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+                  }}
+                >
+                  Skills
+                </span>
+                <span className="invisible">Skills</span>
+              </span>
+            </motion.h2>
 
       <motion.div
         className="relative flex items-center justify-center mt-40"
@@ -103,14 +180,15 @@ export const SkillsSection = () => {
         transition={{ duration: 0.8 }}
       >
         {/* Cards Container */}
-        <div className="relative w-full max-w-6xl mx-auto px-16">
+        <div className="relative w-full max-w-6xl mx-auto px-16 overflow-visible">
           <div
-            className="flex items-center transition-transform duration-500 ease-out"
+            className="flex items-center gap-8 transition-transform duration-500 ease-out"
             style={{
+              // 320 card + 32 gap = 352
               transform: `translateX(${
-                -((baseIndex + currentIndex) * 320) + 360
+                -((baseIndex + currentIndex) * 352) + 360
               }px)`,
-              width: `${extendedSkills.length * 320}px`,
+              width: `${extendedSkills.length * 352}px`,
             }}
           >
             {extendedSkills.map((skill, index) => {

@@ -15,13 +15,15 @@ import {
   Keyboard,
   Workflow,
   Brain,
-  MapPinned
+  MapPinned,
+  DoorOpen
 } from "lucide-react";
 import {
   VerticalTimelineElement,
   VerticalTimeline,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+import { motion } from "motion/react";
 
 export const RoadmapSection = () => {
   const [scrolled, setScrolled] = useState(true);
@@ -52,7 +54,13 @@ export const RoadmapSection = () => {
 
   return (
     <section id="roadmap" className="min-h-screen py-24 px-4 relative">
-      <h2 className="subtitle">
+      <motion.h2
+              className="text-3xl md:text-4xl font-bold text-center mb-12"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.8 }}
+            >
         <span className="relative flex items-center justify-center overflow-hidden h-12">
           <span
             className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
@@ -72,7 +80,7 @@ export const RoadmapSection = () => {
           </span>
           <span className="invisible">Roadmap</span>
         </span>
-      </h2>
+      </motion.h2>
       <VerticalTimeline
         className="vertical-timeline--education top-10"
         lineColor={`hsl(var(--foreground))`}
@@ -83,7 +91,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date="Now"
+          date={<span className="text-xl">Now</span>}
           iconStyle={{
             background: `hsl(var(--card))`,
             display: "flex",
@@ -102,7 +110,7 @@ export const RoadmapSection = () => {
           </h3>
           <div className="text-xl mt-2"> 
             Seeking IT related job opportunities while taking the professional
-            year program to gain experiences.
+            year program to gain experiences <DoorOpen className="mx-1 inline" />
           </div>
         </VerticalTimelineElement>
         <VerticalTimelineElement
@@ -111,7 +119,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date="July 2024 - December 2024"
+          date={<span className="text-xl">July 2024 - December 2024</span>}
           iconStyle={{
             background: `hsl(var(--card))`,
             display: "flex",
@@ -156,7 +164,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date="March 2024 - July 2025"
+          date={<span className="text-xl">March 2024 - July 2025</span>}
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/unimelb.png" />}
         >
@@ -194,7 +202,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date="August 2023 - December 2023"
+          date={<span className="text-xl">August 2023 - December 2023</span>}
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/aia.png" />}
         >
@@ -229,7 +237,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date="March 2021 - December 2023"
+          date={<span className="text-xl">March 2021 - December 2023</span>}
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/unimelb.png" />}
         >

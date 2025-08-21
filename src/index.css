@@ -17,6 +17,7 @@
   --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
   --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
   --animate-blur-in: blur-in 0.8s ease-out forwards;
+   --animate-blur-out: blur-out 0.8s ease-out forwards;
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-wiggle: duck-wiggle 2s ease-in-out infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
@@ -39,6 +40,17 @@
   100% {
     filter: blur(0px);
     opacity: 1;
+  }
+}
+
+@keyframes blur-out {
+  0% {
+    filter: blur(0px);
+    opacity: 100;
+  }
+  100% {
+    filter: blur(8px);
+    opacity: 0;
   }
 }
   @keyframes fade-in {
