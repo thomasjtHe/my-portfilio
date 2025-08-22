@@ -89,10 +89,9 @@ export const AboutSection = () => {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="space-y-6">
-            <p className="text-foreground items-center">
-              <div className="subtitle inline text-primary">I am</div> Thomas
-              He, currently 21 y/o and just graduated from university. My study
+          <div className="space-y-6 text-left">
+            <p className="text-foreground">
+              <div className="subtitle inline text-primary">I am</div> currently 21 y/o and just graduated from university. My study
               focus was on Artificial Intelleigence where I experimented with{" "}
               <div className="text-2xl inline text-primary">
                 {" "}
@@ -118,13 +117,16 @@ export const AboutSection = () => {
               experienced than me to deliver products that will come in handy
               and be impressive to our end users.
             </p>
-            <a
+            <div className="text-center">
+              <a
               href="src/assets/Jinting_He_Resume.pdf"
               className="pdf-link cosmic-button rounded-full border-primary hover:bg-primary/50 transition-colors duration-300"
               target="_blank"
             >
               📄 Check My Resume
             </a>
+            </div>
+            
           </div>
           <div className="flex flex-col text-foreground items-center justify-center">
             <div className="flex group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 my-2 min-w-[202px]">

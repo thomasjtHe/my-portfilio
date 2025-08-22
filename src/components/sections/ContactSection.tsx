@@ -7,7 +7,7 @@ import { ContactDuck } from "../models/ContactDuck";
 import { useState, useEffect, useMemo } from "react";
 import { AnimatePresence } from "motion/react";
 import Earth from "../Icons/Earth";
-import { PhoneIncoming } from "lucide-react";
+import { FileUser, PhoneIncoming } from "lucide-react";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
@@ -33,60 +33,59 @@ export const ContactSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
   useEffect(() => {
     if (!duckLoading) {
       setTimeout(() => setDuckVisible(true), 100); // optional small delay
     }
   }, [duckLoading]);
 
-    const canvasComponent = useMemo(() => (
-    <Canvas camera={{ position: [0.8, 0.7, 0.4], fov: 50 }}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[3, 5, 2]} intensity={0.5} />
-      <ContactDuck scale={1.2} onLoad={() => setDuckLoading(false)} />
-      <OrbitControls
-        target={[0, 0.5, 0]}
-        minDistance={2}
-        maxDistance={4}
-        enableZoom={false}
-      />
-      <Environment preset="sunset" />
-    </Canvas>
-  ), [duckLoading]); 
+  const canvasComponent = useMemo(
+    () => (
+      <Canvas camera={{ position: [0.8, 0.7, 0.4], fov: 50 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[3, 5, 2]} intensity={0.5} />
+        <ContactDuck scale={1.2} onLoad={() => setDuckLoading(false)} />
+        <OrbitControls
+          target={[0, 0.5, 0]}
+          minDistance={2}
+          maxDistance={4}
+          enableZoom={false}
+        />
+        <Environment preset="sunset" />
+      </Canvas>
+    ),
+    [duckLoading]
+  );
 
   return (
     <section id="contact" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className="relative flex items-center justify-center overflow-hidden h-12">
+        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="inline-flex items-center justify-center gap-3 h-12">
+          <span className="relative inline-grid h-full overflow-hidden">
+            {/* Icon layer */}
             <span
-              className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-              style={{
-                transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
-              }}
+              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out
+          ${showIcon ? "translate-y-0" : "-translate-y-full"}`}
             >
               <PhoneIncoming className="h-8 w-8" />
             </span>
+            {/* Text layer */}
             <span
-              className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-              style={{
-                transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
-              }}
+              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out
+          ${showIcon ? "translate-y-full" : "translate-y-0"}`}
             >
               Contact
             </span>
-            <span className="inline items-center justify-center ">
-              <span className="invisible mr-14">Contact</span>
-              <span className="ml-3 text-primary">Me</span>
-            </span>
           </span>
-        </motion.h2>
+          <span className="text-primary">Me</span>
+        </span>
+      </motion.h2>
 
       <div className="container mx-auto h-[70vh] grid grid-rows-[2fr_1fr] gap-8">
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">
@@ -189,7 +188,13 @@ export const ContactSection = () => {
               {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
-                  <a href="https://github.com/thomasjtHe" target="_blank" className="text-md hover:underline">github.com/thomasjtHe</a>
+                  <a
+                    href="https://github.com/thomasjtHe"
+                    target="_blank"
+                    className="text-md hover:underline"
+                  >
+                    github.com/thomasjtHe
+                  </a>
                 </div>
               </div>
             </div>
@@ -206,7 +211,13 @@ export const ContactSection = () => {
               {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-72 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
-                  <a href="https://www.linkedin.com/in/thomas-he-8ba66336a" target="_blank" className="text-md hover:underline">www.linkedin.com/in/thomas-he-8ba66336a</a>
+                  <a
+                    href="https://www.linkedin.com/in/thomas-he-8ba66336a"
+                    target="_blank"
+                    className="text-md hover:underline"
+                  >
+                    www.linkedin.com/in/thomas-he-8ba66336a
+                  </a>
                 </div>
               </div>
             </div>
@@ -223,6 +234,28 @@ export const ContactSection = () => {
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-32 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap text-center">
                   <span className="text-md">chillaxx</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Resume Tab */}
+          <div className="group relative">
+            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+              {/* Icon (always visible) */}
+              <div className="p-4 text-3xl text-white">
+                <FileUser />
+              </div>
+
+              {/* Expandable content */}
+              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-16 group-hover:animate-blur-in">
+                <div className="pr-6 whitespace-nowrap">
+                  <a
+                    href="src/assets/Jinting_He_Resume.pdf"
+                    target="_blank"
+                    className="text-md hover:underline"
+                  >
+                    Resume
+                  </a>
                 </div>
               </div>
             </div>

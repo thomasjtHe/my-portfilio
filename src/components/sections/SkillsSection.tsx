@@ -140,37 +140,45 @@ export const SkillsSection = () => {
   };
 
   const extendedSkills = getExtendedSkills();
-  const baseIndex = majorSkills.length;
+
+  // Card dimensions - match the SkillCard component
+  const CARD_SLOT_WIDTH = 320; // w-80 = 320px for non-center cards
+  const CENTER_CARD_SLOT_WIDTH = 368; // w-[23rem] = 368px for center card
+  const CARD_GAP = 32;
+  
+  // Calculate the actual width used for positioning
+  const getCardWidth = (isCenter: boolean) => 
+    isCenter ? CENTER_CARD_SLOT_WIDTH : CARD_SLOT_WIDTH;
 
   return (
     <section id="skills" className="min-h-screen py-24 px-4 relative">
       <motion.h2
-                    className="text-3xl md:text-4xl font-bold text-center mb-12"
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.8 }}
-                  >
-              <span className="relative flex items-center justify-center overflow-hidden h-12">
-                <span
-                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-                  style={{
-                    transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
-                  }}
-                >
-                  <Hammer className="h-10 w-10" />
-                </span>
-                <span
-                  className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-                  style={{
-                    transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
-                  }}
-                >
-                  Skills
-                </span>
-                <span className="invisible">Skills</span>
-              </span>
-            </motion.h2>
+        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="relative flex items-center justify-center overflow-hidden h-12">
+          <span
+            className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+            style={{
+              transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+            }}
+          >
+            <Hammer className="h-10 w-10" />
+          </span>
+          <span
+            className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
+            style={{
+              transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+            }}
+          >
+            Skills
+          </span>
+          <span className="invisible">Skills</span>
+        </span>
+      </motion.h2>
 
       <motion.div
         className="relative flex items-center justify-center mt-40"
@@ -180,22 +188,18 @@ export const SkillsSection = () => {
         transition={{ duration: 0.8 }}
       >
         {/* Cards Container */}
-        <div className="relative w-full max-w-6xl mx-auto px-16 overflow-visible">
+        <div className="relative w-full max-w-6xl mx-auto px-8 overflow-visible">
           <div
             className="flex items-center gap-8 transition-transform duration-500 ease-out"
             style={{
-              // 320 card + 32 gap = 352
-              transform: `translateX(${
-                -((baseIndex + currentIndex) * 352) + 360
-              }px)`,
-              width: `${extendedSkills.length * 352}px`,
+              transform: `translateX(${-((majorSkills.length + currentIndex) * (CARD_SLOT_WIDTH + CARD_GAP)) + 360}px)`,
+              width: `${extendedSkills.length * (CARD_SLOT_WIDTH + CARD_GAP)}px`,
             }}
           >
             {extendedSkills.map((skill, index) => {
-              const distanceFromCenter = Math.abs(
-                index - (baseIndex + currentIndex)
-              );
-              const isCenter = index === baseIndex + currentIndex;
+              const actualIndex = index % majorSkills.length;
+              const distanceFromCenter = Math.abs(index - (majorSkills.length + currentIndex));
+              const isCenter = index === majorSkills.length + currentIndex;
               const isAdjacent = distanceFromCenter === 1;
               const isVisible = distanceFromCenter <= 1;
 
@@ -206,7 +210,7 @@ export const SkillsSection = () => {
                   isCenter={isCenter}
                   isAdjacent={isAdjacent}
                   isVisible={isVisible}
-                  onClick={() => setCurrentIndex(skill.id - 1)}
+                  onClick={() => setCurrentIndex(actualIndex)}
                 />
               );
             })}
@@ -216,7 +220,7 @@ export const SkillsSection = () => {
 
       {/* Indicators */}
       <motion.div
-        className="flex justify-center mt-8 gap-2"
+        className="flex justify-center mt-10 gap-2"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
