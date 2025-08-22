@@ -3,7 +3,6 @@ import { ArrowBigDown, Presentation } from "lucide-react";
 import { motion } from "motion/react";
 import { ProjectCard, type ProjectProps } from "../cards/ProjectCard";
 
-
 export const ProjectSection = () => {
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
@@ -11,7 +10,7 @@ export const ProjectSection = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => setShowIcon(p => !p), 3330);
+    const interval = setInterval(() => setShowIcon((p) => !p), 3330);
     return () => clearInterval(interval);
   }, []);
 
@@ -19,25 +18,40 @@ export const ProjectSection = () => {
     {
       name: "Motivational Modelling",
       imageSrc: ["/src/assets/mm.png", "/src/assets/mm2.webp"],
-      description: "A cutting-edge web application for modern businesses that helps track and improve motivation through data-driven insights.",
-      skills: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
-      link: "https://www.leonsterling.com/aboutmotivationalmodelling"
+      description:
+        "Building a motivational model helps you understand the roles of stakeholders in a system, as well as the functional and quality goals of a system. Perhaps most importantly, the process also allows you to capture the emotional goals of a system: both the positive feelings people want to have when interacting with the system, and possible issues that you might face in getting there.",
+      link: "https://www.leonsterling.com/aboutmotivationalmodelling",
+      skills: ["React", "TypeScript", "Bootstrap", "HTML", "CSS", "npm"],
     },
     {
       name: "Algorithms in Action",
-      imageSrc: ["/src/assets/AIA1.png", "/src/assets/AIA2.png", "/src/assets/AIA3.png", "/src/assets/AIA4.png", "/src/assets/AIA5.png"],
-      description: "A cutting-edge web application for modern businesses that helps track and improve motivation through data-driven insights.",
-      skills: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
-      link: "https://github.com/algorithms-in-action/algorithms-in-action.github.io"
+      imageSrc: [
+        "/src/assets/AIA1.png",
+        "/src/assets/AIA2.png",
+        "/src/assets/AIA3.png",
+        "/src/assets/AIA4.png",
+        "/src/assets/AIA5.png",
+      ],
+      description:
+        "Algorithms in Action (AIA) is an animation software tool, developed for the purposes of teaching computer science algorithms by Linda Stern, Lee Naish, and Harald Søndergaard at The University of Melbourne. A key feature of AIA, not found in other algorithm animations, is that students can view an algorithm at varying levels of detail. Starting with a high level pseudocode description of the algorithm, with accompanying high level animation and textual explanation, students can expand sections of the pseudocode to expose more detail. Animation and explanation are controlled in coordinate fashion, becoming correspondingly more detailed as the pseudocode is expanded.",
+      skills: ["React", "JavaScript", "Node.js", "HTML", "CSS", "npm"],
+      link: "https://github.com/algorithms-in-action/algorithms-in-action.github.io",
     },
-     {
+    {
       name: "Sustain-a-Bite",
-      imageSrc: ["/src/assets/SAB1.png", "/src/assets/SAB2.png", "/src/assets/SAB3.png", "/src/assets/SAB4.png", "/src/assets/SAB5.png", "/src/assets/SAB6.png"],
-      description: "A cutting-edge web application for modern businesses that helps track and improve motivation through data-driven insights.",
-      skills: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
-      link: "/src/assets/SABVideo.mp4"
+      imageSrc: [
+        "/src/assets/SAB1.png",
+        "/src/assets/SAB2.png",
+        "/src/assets/SAB3.png",
+        "/src/assets/SAB4.png",
+        "/src/assets/SAB5.png",
+        "/src/assets/SAB6.png",
+      ],
+      description:
+        "A student innovation project that aims to promote sustainable food practices and reduce food waste. The team went through a process of interviewing stakeholders and conducting research to identify key areas for improvement, then developing a product type, demonstrating its use, and gathering feedback. Through rounds of prototyping and testing, the team refined their solution to better meet the needs of users.",
+      skills: ["Figma", "Jira"],
+      link: "/src/assets/SABVideo.mp4",
     },
-
   ];
 
   useEffect(() => {
@@ -72,13 +86,17 @@ export const ProjectSection = () => {
         <span className="relative flex items-center justify-center overflow-hidden h-12">
           <span
             className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-            style={{ transform: showIcon ? "translateY(0%)" : "translateY(-100%)" }}
+            style={{
+              transform: showIcon ? "translateY(0%)" : "translateY(-100%)",
+            }}
           >
             <Presentation className="h-10 w-10" />
           </span>
           <span
             className="absolute flex items-center justify-center transition-transform duration-500 ease-in-out inset-0"
-            style={{ transform: showIcon ? "translateY(-100%)" : "translateY(0%)" }}
+            style={{
+              transform: showIcon ? "translateY(-100%)" : "translateY(0%)",
+            }}
           >
             Projects
           </span>
@@ -86,7 +104,13 @@ export const ProjectSection = () => {
         </span>
       </motion.h2>
 
-      <div className="flex flex-cols justify-center mr-5">
+      <motion.div
+        className="flex flex-cols justify-center mr-5"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.8 }}
+      >
         <div
           ref={containerRef}
           className="relative flex flex-wrap justify-center w-full md:w-3/4 gap-5 md:gap-10"
@@ -104,11 +128,11 @@ export const ProjectSection = () => {
                 animate={{
                   flexBasis: isExpanded ? "100%" : "270px",
                   // keep minWidth so it never hits 0 during interpolation
-                  minWidth: isExpanded ? "100%" : "260px"
+                  minWidth: isExpanded ? "100%" : "260px",
                 }}
                 className={`relative`}
                 style={{
-                  alignSelf: "flex-start"
+                  alignSelf: "flex-start",
                 }}
               >
                 <ProjectCard
@@ -121,7 +145,7 @@ export const ProjectSection = () => {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Arrow */}
       <div className="flex justify-center mt-20">

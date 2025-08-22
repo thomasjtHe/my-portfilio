@@ -5,14 +5,11 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { ContactDuck } from "../models/ContactDuck";
 import { useState, useEffect, useMemo } from "react";
-import { AnimatePresence } from "motion/react";
-import Earth from "../Icons/Earth";
 import { FileUser, PhoneIncoming } from "lucide-react";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
   const [duckVisible, setDuckVisible] = useState(false);
-  const [atBottom, setAtBottom] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
 
   useEffect(() => {
@@ -23,19 +20,8 @@ export const ContactSection = () => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } =
-        document.documentElement;
-      setAtBottom(scrollTop + clientHeight >= scrollHeight - 1);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
     if (!duckLoading) {
-      setTimeout(() => setDuckVisible(true), 100); // optional small delay
+      setTimeout(() => setDuckVisible(true), 100);
     }
   }, [duckLoading]);
 
@@ -58,9 +44,12 @@ export const ContactSection = () => {
   );
 
   return (
-    <section id="contact" className="min-h-screen py-24 px-4 relative">
+    <section
+      id="contact"
+      className="min-h-screen pt-24 px-4 relative flex flex-col"
+    >
       <motion.h2
-        className="text-3xl md:text-4xl font-bold text-center mb-12"
+        className="text-3xl md:text-4xl font-bold text-center mt-15 "
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
@@ -68,17 +57,17 @@ export const ContactSection = () => {
       >
         <span className="inline-flex items-center justify-center gap-3 h-12">
           <span className="relative inline-grid h-full overflow-hidden">
-            {/* Icon layer */}
             <span
-              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out
-          ${showIcon ? "translate-y-0" : "-translate-y-full"}`}
+              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out ${
+                showIcon ? "translate-y-0" : "-translate-y-full"
+              }`}
             >
               <PhoneIncoming className="h-8 w-8" />
             </span>
-            {/* Text layer */}
             <span
-              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out
-          ${showIcon ? "translate-y-full" : "translate-y-0"}`}
+              className={`col-start-1 row-start-1 flex h-full w-full items-center justify-center transition-transform duration-500 ease-in-out ${
+                showIcon ? "translate-y-full" : "translate-y-0"
+              }`}
             >
               Contact
             </span>
@@ -87,9 +76,8 @@ export const ContactSection = () => {
         </span>
       </motion.h2>
 
-      <div className="container mx-auto h-[70vh] grid grid-rows-[2fr_1fr] gap-8">
+      <div className="container mx-auto flex-1 grid grid-rows-[2fr_auto] gap-8 mt-15">
         <div className="h-100 items-center justify-center flex relative min-h-[300px]">
-          {/* Loading Overlay with Spinner */}
           <div
             className={`absolute inset-0 flex items-center justify-center bg-background/0 z-20 transition-opacity duration-300 ${
               duckLoading
@@ -118,7 +106,6 @@ export const ContactSection = () => {
             </svg>
           </div>
 
-          {/* Full Canvas */}
           <div
             className={`w-full h-full transition-opacity duration-300 ${
               duckVisible ? "opacity-100" : "opacity-0"
@@ -127,19 +114,15 @@ export const ContactSection = () => {
             {canvasComponent}
           </div>
 
-          {/* Blocking overlay with circular hole */}
           <div className="absolute inset-0 pointer-events-none">
-            {/* Top rectangle */}
             <div
               className="absolute top-0 left-0 right-0 pointer-events-auto bg-transparent"
               style={{ height: "calc(50% - 128px)" }}
             ></div>
-            {/* Bottom rectangle */}
             <div
               className="absolute bottom-0 left-0 right-0 pointer-events-auto bg-transparent"
               style={{ height: "calc(50% - 128px)" }}
             ></div>
-            {/* Left rectangle */}
             <div
               className="absolute left-0 pointer-events-auto bg-transparent"
               style={{
@@ -148,7 +131,6 @@ export const ContactSection = () => {
                 height: "256px",
               }}
             ></div>
-            {/* Right rectangle */}
             <div
               className="absolute right-0 pointer-events-auto bg-transparent"
               style={{
@@ -159,16 +141,13 @@ export const ContactSection = () => {
             ></div>
           </div>
         </div>
-        <div className="flex flex-row justify-center items-center gap-6">
-          {/* Gmail Tab */}
+
+        <div className="flex flex-row flex-wrap justify-center items-center gap-6 mb-10">
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
-              {/* Icon (always visible) */}
               <div className="p-4 text-3xl text-red-500">
                 <SiGmail />
               </div>
-
-              {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
                   <span className="text-md">thomashe42@gmail.com</span>
@@ -177,20 +156,17 @@ export const ContactSection = () => {
             </div>
           </div>
 
-          {/* GitHub Tab */}
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
-              {/* Icon (always visible) */}
               <div className="p-4 text-3xl text-gray-200">
                 <FaGithub />
               </div>
-
-              {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
                   <a
                     href="https://github.com/thomasjtHe"
                     target="_blank"
+                    rel="noreferrer"
                     className="text-md hover:underline"
                   >
                     github.com/thomasjtHe
@@ -200,20 +176,17 @@ export const ContactSection = () => {
             </div>
           </div>
 
-          {/* LinkedIn Tab */}
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
-              {/* Icon (always visible) */}
               <div className="p-4 text-3xl text-[#0077B5]">
                 <FaLinkedinIn />
               </div>
-
-              {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-72 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
                   <a
                     href="https://www.linkedin.com/in/thomas-he-8ba66336a"
                     target="_blank"
+                    rel="noreferrer"
                     className="text-md hover:underline"
                   >
                     www.linkedin.com/in/thomas-he-8ba66336a
@@ -222,15 +195,12 @@ export const ContactSection = () => {
               </div>
             </div>
           </div>
-          {/* Discord Tab */}
+
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
-              {/* Icon (always visible) */}
               <div className="p-4 text-3xl text-[#5865F2]">
                 <FaDiscord />
               </div>
-
-              {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-32 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap text-center">
                   <span className="text-md">chillaxx</span>
@@ -238,20 +208,18 @@ export const ContactSection = () => {
               </div>
             </div>
           </div>
-          {/* Resume Tab */}
+
           <div className="group relative">
             <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
-              {/* Icon (always visible) */}
               <div className="p-4 text-3xl text-white">
                 <FileUser />
               </div>
-
-              {/* Expandable content */}
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-16 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
                   <a
                     href="src/assets/Jinting_He_Resume.pdf"
                     target="_blank"
+                    rel="noreferrer"
                     className="text-md hover:underline"
                   >
                     Resume
@@ -261,8 +229,7 @@ export const ContactSection = () => {
             </div>
           </div>
         </div>
-      </div>
-      <AnimatePresence>{atBottom && <Earth />}</AnimatePresence>
+      </div> 
     </section>
   );
 };
