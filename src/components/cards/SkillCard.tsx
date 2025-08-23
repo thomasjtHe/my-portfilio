@@ -22,13 +22,12 @@ type SkillCardProps = {
   onClick?: () => void;
 };
 
-// SkillCard Component
 export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: SkillCardProps) => {
   const [hoveredMinor, setHoveredMinor] = useState<string | null>(null);
   const [outgoingMinor, setOutgoingMinor] = useState<string | null>(null);
   const prevNameRef = useRef<string | null>(null);
 
-  // Track previous name to animate it out when switching or when leaving
+  // Track previous name 
   useEffect(() => {
     const prev = prevNameRef.current;
     if (prev && prev !== hoveredMinor) {
@@ -41,9 +40,8 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
     return <div className="w-80 flex-shrink-0" />;
   }
 
-  // Make the center card occupy a wider slot to keep margins with neighbors intact.
+  // Make the center card occupy a wider slot
   const slotWidth = isCenter ? 'w-[23rem]' : 'w-80';
-
   const bannerVisible = Boolean(hoveredMinor || outgoingMinor);
 
   return (
@@ -54,7 +52,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
       `}
       onClick={onClick}
     >
-      {/* Scale only the center card's content so it's visibly bigger */}
+      {/* Scale only the center card's content */}
       <div
         className={`
           origin-center transform-gpu transition-transform duration-500 ease-out

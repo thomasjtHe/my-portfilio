@@ -141,15 +141,10 @@ export const SkillsSection = () => {
 
   const extendedSkills = getExtendedSkills();
 
-  // Card dimensions - match the SkillCard component
-  const CARD_SLOT_WIDTH = 320; // w-80 = 320px for non-center cards
-  const CENTER_CARD_SLOT_WIDTH = 368; // w-[23rem] = 368px for center card
+  // Card dimensions 
+  const CARD_SLOT_WIDTH = 320; 
   const CARD_GAP = 32;
   
-  // Calculate the actual width used for positioning
-  const getCardWidth = (isCenter: boolean) => 
-    isCenter ? CENTER_CARD_SLOT_WIDTH : CARD_SLOT_WIDTH;
-
   return (
     <section id="skills" className="min-h-screen py-24 px-4 relative">
       <motion.h2

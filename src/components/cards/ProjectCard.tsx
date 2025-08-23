@@ -27,12 +27,11 @@ export const ProjectCard = ({
   const [isAnimating, setIsAnimating] = useState(false);
 
   const truncateDescription = (text: string, wordLimit: number = 10) => {
-    const words = text.split(' ');
-    console.log(`Description has ${words.length} words, limit is ${wordLimit}, truncated: ${words.length > wordLimit}`); // Debug log
+    const words = text.split(" ");
     if (words.length <= wordLimit) {
       return text;
     }
-    return words.slice(0, wordLimit).join(' ') + '...';
+    return words.slice(0, wordLimit).join(" ") + "...";
   };
 
   useEffect(() => {
@@ -47,14 +46,13 @@ export const ProjectCard = ({
     setIsAnimating(true);
     onExpand?.(!isExpanded);
     onClick?.();
-    
+
     setTimeout(() => {
       setIsAnimating(false);
-    }, 1500); 
+    }, 1500);
   };
 
-
-  const COLLAPSED_IMAGE_HEIGHT = 128; 
+  const COLLAPSED_IMAGE_HEIGHT = 128;
 
   return (
     <div
@@ -80,19 +78,19 @@ export const ProjectCard = ({
           className={`
             bg-background/50 backdrop-blur-sm rounded-xl p-6
             shadow-2xl transition-all duration-1500 ease-in-out w-full overflow-hidden
-            ${isExpanded 
-              ? "h-auto min-h-96 shadow-3xl bg-card/70" 
-              : "h-auto hover:scale-105 hover:shadow-xl"
+            ${
+              isExpanded
+                ? "h-auto min-h-96 shadow-3xl bg-card/70"
+                : "h-auto hover:scale-105 hover:shadow-xl"
             }
           `}
           style={{
-            border: isExpanded 
-              ? "1px solid hsl(var(--primary) / 0.3)" 
+            border: isExpanded
+              ? "1px solid hsl(var(--primary) / 0.3)"
               : "1px solid hsl(var(--border))",
-            minHeight: isExpanded ? "384px" : "280px"
+            minHeight: isExpanded ? "384px" : "280px",
           }}
         >
-          {/* Use one consistent flex container; switch direction & gaps only */}
           <div
             className={`
               flex transition-all duration-1500 ease-in-out h-full
@@ -110,7 +108,7 @@ export const ProjectCard = ({
                 minHeight: isExpanded ? "400px" : `${COLLAPSED_IMAGE_HEIGHT}px`,
               }}
             >
-              {/* A static background (current image) to ensure no blank frame */}
+              {/* A static background */}
               {project.imageSrc.map((src, imgIndex) => (
                 <img
                   key={imgIndex}
@@ -119,7 +117,11 @@ export const ProjectCard = ({
                   className={`
                     absolute inset-0 w-full h-full object-cover 
                     transition-all duration-700 will-change-opacity
-                    ${imgIndex === currentImageIndex ? "opacity-100" : "opacity-0"}
+                    ${
+                      imgIndex === currentImageIndex
+                        ? "opacity-100"
+                        : "opacity-0"
+                    }
                     ${!isExpanded && !isHovered ? "blur-sm" : "blur-none"}
                   `}
                   onError={(e) => {
@@ -153,7 +155,11 @@ export const ProjectCard = ({
               className={`
                 transition-all duration-1500 ease-in-out
                 flex flex-col flex-grow
-                ${isExpanded ? "w-1/2 text-left py-4 pl-6" : "w-full text-center pt-3"}
+                ${
+                  isExpanded
+                    ? "w-1/2 text-left py-4 pl-6"
+                    : "w-full text-center pt-3"
+                }
                 ${isAnimating ? "opacity-0 pointer-events-none" : "opacity-100"}
               `}
             >
@@ -162,7 +168,11 @@ export const ProjectCard = ({
                   <h3
                     className={`
                       font-bold transition-all duration-500 ease-in-out
-                      ${isExpanded ? "text-3xl md:text-4xl text-primary mb-4" : "text-lg text-primary mb-2"}
+                      ${
+                        isExpanded
+                          ? "text-3xl md:text-4xl text-primary mb-4"
+                          : "text-lg text-primary mb-2"
+                      }
                     `}
                   >
                     {project.name}
@@ -171,10 +181,16 @@ export const ProjectCard = ({
                   <p
                     className={`
                       text-foreground/70 transition-all duration-500 ease-in-out
-                      ${isExpanded ? "text-base md:text-lg leading-relaxed mb-6" : "text-sm leading-relaxed"}
+                      ${
+                        isExpanded
+                          ? "text-base md:text-lg leading-relaxed mb-6"
+                          : "text-sm leading-relaxed"
+                      }
                     `}
                   >
-                    {isExpanded ? project.description : truncateDescription(project.description, 15)}
+                    {isExpanded
+                      ? project.description
+                      : truncateDescription(project.description, 15)}
                   </p>
 
                   {/* Additional content when expanded */}

@@ -53,12 +53,9 @@ export const StarBackground = () => {
   const nextId = () => ++idCounter.current;
 
   // Delay to wait for the theme switch animation to finish (ms).
-  // Adjust to match your theme-switch animation duration (e.g. 600ms).
   const THEME_ANIMATION_DELAY = 600;
   const timersRef = useRef<number[]>([]);
   const intervalsRef = useRef<number[]>([]);
-
-  /* -------------------- Generators -------------------- */
 
   const generateStars = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -83,14 +80,14 @@ export const StarBackground = () => {
     const count = 6;
     const newMeteors: MeteorProps[] = [];
     for (let i = 0; i < count; i++) {
-      const duration = Math.random() * 3 + 3; // 3 - 6 s
-      const progressOffset = Math.random() * duration; // seconds into the flight
+      const duration = Math.random() * 3 + 3; 
+      const progressOffset = Math.random() * duration; 
       newMeteors.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 50,
         size: Math.random() * 3 + 1,
-        delay: -progressOffset, // negative so it starts mid-flight
+        delay: -progressOffset, 
         duration,
       });
     }
@@ -98,9 +95,9 @@ export const StarBackground = () => {
   }, []);
 
   const createTravelingDuck = useCallback((): TravelingDuckProps => {
-    const rotationDirection = Math.random() > 0.5 ? 1 : -1; // 1 for clockwise, -1 for anticlockwise
-    const rotationDegrees = Math.random() * (450 - 300) + 300; // Random value between 300 and 450
-    const flip = Math.random() > 0.5; // Randomly decide if the duck should be flipped
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1; 
+    const rotationDegrees = Math.random() * (450 - 300) + 300; 
+    const flip = Math.random() > 0.5; 
     return {
       id: nextId(),
       y: Math.random() * 60 + 5,
@@ -130,9 +127,8 @@ export const StarBackground = () => {
     setFallingDucks(ducks);
   }, []);
 
-  /* -------------------- Effects -------------------- */
 
-  // Initialize stars + meteors on dark mode change (delayed to wait for theme animation)
+  // Initialize stars + meteors on dark mode change 
   useEffect(() => {
     // clear any pending timers for safety
     timersRef.current.forEach((t) => clearTimeout(t));
@@ -148,7 +144,6 @@ export const StarBackground = () => {
       }, THEME_ANIMATION_DELAY);
       timersRef.current.push(t);
     } else {
-      // leaving dark mode: clear stars/meteors immediately (or you can fade them out)
       setStars([]);
       setMeteors([]);
       setItemsVisible(false);
@@ -162,7 +157,6 @@ export const StarBackground = () => {
   // Initialize falling ducks on light mode (delayed)
   useEffect(() => {
     // only schedule falling ducks when leaving dark mode.
-    // do NOT clear shared timersRef here (it may hold stars/meteor timers).
     setItemsVisible(false);
     setCloudsVisible(false);
     if (!isDarkMode) {
@@ -177,7 +171,6 @@ export const StarBackground = () => {
       timersRef.current.push(t);
       return () => {
         clearTimeout(t);
-        // remove it from timersRef for cleanliness
         timersRef.current = timersRef.current.filter((id) => id !== t);
         // ensure clouds hidden on cleanup
         setCloudsVisible(false);
@@ -203,7 +196,7 @@ export const StarBackground = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Window resize (throttled)
+  // Window resize 
   useEffect(() => {
     if (!isDarkMode) return;
     let frame = 0;
@@ -220,11 +213,10 @@ export const StarBackground = () => {
 
   // Traveling ducks every 5s (always, but only visible in dark mode)
   useEffect(() => {
-    // start interval only after theme animation delay to avoid ducks appearing mid-theme-switch
     // store timeout and interval IDs in refs for cleanup
     const startTimer = window.setTimeout(() => {
       const intervalId = window.setInterval(() => {
-        if (!isDarkMode) return; // only create while dark mode
+        if (!isDarkMode) return; 
         const duck = createTravelingDuck();
         setTravelingDucks((prev) => [...prev, duck]);
         const removeTimer = window.setTimeout(
@@ -235,13 +227,11 @@ export const StarBackground = () => {
       }, 5000);
       intervalsRef.current.push(intervalId);
     }, THEME_ANIMATION_DELAY);
-    timersRef.current.push(startTimer); // timeout id should go to timersRef
+    timersRef.current.push(startTimer);
 
     return () => {
-      // clear both timeouts and intervals
       intervalsRef.current.forEach((id) => clearInterval(id));
       timersRef.current.forEach((t) => clearTimeout(t));
-      // keep arrays intact for other effects; remove only the ones we created above
       intervalsRef.current = [];
       timersRef.current = [];
     };
@@ -263,7 +253,6 @@ export const StarBackground = () => {
       // clear only what this effect created
       intervalsRef.current.forEach((id) => clearInterval(id));
       clearTimeout(startId);
-      // leave timersRef for other owners
     };
   }, [isDarkMode, generateFallingDucks]);
 
@@ -274,8 +263,6 @@ export const StarBackground = () => {
       timersRef.current.forEach((t) => clearTimeout(t));
     };
   }, []);
-
-  /* -------------------- Render -------------------- */
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">

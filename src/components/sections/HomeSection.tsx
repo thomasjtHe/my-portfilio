@@ -2,7 +2,7 @@ import { ArrowBigDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
-import { Duck } from "../models/Duck";
+import { Duck } from "../models/HomeDuck";
 
 export const HomeSection = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -12,13 +12,11 @@ export const HomeSection = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
-      console.log(scrolled);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      console.log(scrolled);
     };
   }, []);
 
@@ -99,7 +97,7 @@ export const HomeSection = () => {
         } transition delay-150 duration-300`}
       >
         <div className="bottom-6 animate-bounce cursor-pointer flex flex-col items-center">
-          Scroll Down to Learn More!
+          Scroll Down to Know More!
           <ArrowBigDown />
         </div>
       </a>

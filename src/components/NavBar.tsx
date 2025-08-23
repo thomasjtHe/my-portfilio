@@ -23,14 +23,12 @@ export const NavBar = () => {
     { name: "Contact", href: "#contact" },
   ];
 
-  // Update scrolled background
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Midpoint-based active section detection
   useEffect(() => {
     const sectionIds = navItems.map((i) => i.href.slice(1));
     const sections: HTMLElement[] = sectionIds
@@ -43,7 +41,6 @@ export const NavBar = () => {
       scrollTicking.current = false;
       const viewportMid = window.scrollY + window.innerHeight / 2;
 
-      // Handle near-bottom edge case: if scrolled to bottom, force last section active
       if (
         Math.ceil(window.innerHeight + window.scrollY) >=
         document.documentElement.scrollHeight - 2
@@ -83,7 +80,6 @@ export const NavBar = () => {
 
   const handleNavClick = useCallback((href: string) => {
     setIsOpen(false);
-    // Let scroll behavior set the active, but we optimistically set it
     setActiveSection(href.slice(1));
   }, []);
 
@@ -97,7 +93,6 @@ export const NavBar = () => {
       <div className="container flex items-center justify-between">
         {/* Theme Toggle */}
         <div className="text-sm font-medium text-foreground/80">
-          {/* Theme Toggle Switch (animated) */}
           <button
             ref={modeRef}
             className="relative w-16 h-8 bg-foreground/10 rounded-full flex items-center cursor-pointer"

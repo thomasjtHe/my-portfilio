@@ -11,8 +11,8 @@ export const FallingRubberDuck = ({
     className={`falling-duck ${className}`}
     style={{
       position: "absolute",
-      top: `-100px`, // Start above the viewport
-      ...style, // Merge dynamic styles
+      top: `-100px`, 
+      ...style, 
     }}
   >
     <svg

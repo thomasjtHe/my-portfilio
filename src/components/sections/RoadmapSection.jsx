@@ -16,7 +16,8 @@ import {
   Workflow,
   Brain,
   MapPinned,
-  DoorOpen
+  DoorOpen,
+  Rocket
 } from "lucide-react";
 import {
   VerticalTimelineElement,
@@ -100,8 +101,8 @@ export const RoadmapSection = () => {
             color: "#fff",
           }}
           icon={
-            <span className="text-4xl" role="img" aria-label="hugging-face">
-              🤗
+            <span className="h-14 w-14">
+              <DoorOpen className="h-14 w-14" />
             </span>
           }
         >
@@ -110,7 +111,7 @@ export const RoadmapSection = () => {
           </h3>
           <div className="text-xl mt-2"> 
             Seeking IT related job opportunities while taking the professional
-            year program to gain experiences <DoorOpen className="mx-1 inline" />
+            year program to gain experiences <Rocket className="mx-1 inline" />
           </div>
         </VerticalTimelineElement>
         <VerticalTimelineElement

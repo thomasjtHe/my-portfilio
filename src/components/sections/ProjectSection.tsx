@@ -19,7 +19,7 @@ export const ProjectSection = () => {
       name: "Motivational Modelling",
       imageSrc: ["/src/assets/mm.png", "/src/assets/mm2.webp"],
       description:
-        "Building a motivational model helps you understand the roles of stakeholders in a system, as well as the functional and quality goals of a system. Perhaps most importantly, the process also allows you to capture the emotional goals of a system: both the positive feelings people want to have when interacting with the system, and possible issues that you might face in getting there.",
+        "Motivational Model Editor is an app that helps users create and visualize motivational models. My job was to develop and improve several functionalities enhance UI and debug issues. Throughout the internship I engaged closely with both my fellow developers and senior stakeholders to guarantee high-quality production.",
       link: "https://www.leonsterling.com/aboutmotivationalmodelling",
       skills: ["React", "TypeScript", "Bootstrap", "HTML", "CSS", "npm"],
     },
@@ -33,7 +33,7 @@ export const ProjectSection = () => {
         "/src/assets/AIA5.png",
       ],
       description:
-        "Algorithms in Action (AIA) is an animation software tool, developed for the purposes of teaching computer science algorithms by Linda Stern, Lee Naish, and Harald Søndergaard at The University of Melbourne. A key feature of AIA, not found in other algorithm animations, is that students can view an algorithm at varying levels of detail. Starting with a high level pseudocode description of the algorithm, with accompanying high level animation and textual explanation, students can expand sections of the pseudocode to expose more detail. Animation and explanation are controlled in coordinate fashion, becoming correspondingly more detailed as the pseudocode is expanded.",
+        "Algorithms in Action (AIA) is an animation software tool, developed for the purposes of teaching computer science algorithms by the teaching staff and students at The University of Melbourne. My role was to work as a developer to add several algorithm including BFS, DFS and Dijkstra's to the pool of available animations. I also worked as a product owner, who was responsible for bridging the clients with the dev team.",
       skills: ["React", "JavaScript", "Node.js", "HTML", "CSS", "npm"],
       link: "https://github.com/algorithms-in-action/algorithms-in-action.github.io",
     },
