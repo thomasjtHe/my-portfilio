@@ -29,6 +29,16 @@ type TravelingDuckProps = {
   flip: boolean;
 };
 
+type FallingDuckProps = {
+  id: number;
+  x: number;
+  size: number;
+  opacity: number;
+  delay: number;
+  rotation: number;
+  flip: boolean;
+};
+
 export const StarBackground = () => {
   const { isDarkMode } = useTheme();
   const [stars, setStars] = useState<StarProps[]>([]);
@@ -36,6 +46,7 @@ export const StarBackground = () => {
   const [travelingDucks, setTravelingDucks] = useState<TravelingDuckProps[]>(
     []
   );
+  const [fallingDucks, setFallingDucks] = useState<FallingDuckProps[]>([]);
 
   const idCounter = useRef(0);
   const nextId = () => ++idCounter.current;
@@ -93,6 +104,25 @@ export const StarBackground = () => {
     };
   }, []);
 
+  const generateFallingDucks = useCallback(() => {
+    const ducks: FallingDuckProps[] = [];
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+    const rotationDegrees = Math.random() * (450 - 300) + 300;
+    const flip = Math.random() > 0.5;
+    for (let i = 0; i < 5; i++) {
+      ducks.push({
+        id: nextId(),
+        x: Math.random() * 90 + 5, // 5% to 95% to avoid edges
+        size: Math.random() * 20 + 80, // 30-50px size
+        opacity: 0.7,
+        delay: i * 2000, // 0ms, 2000ms, 4000ms, 6000ms, 8000ms
+        rotation: rotationDirection * rotationDegrees,
+        flip,
+      });
+    }
+    setFallingDucks(ducks);
+  }, []);
+
   /* -------------------- Effects -------------------- */
 
   // Visibility reset
@@ -100,6 +130,7 @@ export const StarBackground = () => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         setTravelingDucks([]);
+        setFallingDucks([]);
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -114,6 +145,13 @@ export const StarBackground = () => {
       generateMeteors();
     }
   }, [isDarkMode, generateStars, generateMeteors]);
+
+  // Initialize falling ducks on light mode
+  useEffect(() => {
+    if (!isDarkMode) {
+      generateFallingDucks();
+    }
+  }, [isDarkMode, generateFallingDucks]);
 
   // Window resize (throttled)
   useEffect(() => {
@@ -142,6 +180,17 @@ export const StarBackground = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, [createTravelingDuck]);
+
+  // Falling ducks cycle (only in light mode)
+  useEffect(() => {
+    if (isDarkMode) return;
+    
+    const interval = setInterval(() => {
+      generateFallingDucks();
+    }, 15000); // Restart cycle every 15 seconds (5s animation + 10s gap)
+    
+    return () => clearInterval(interval);
+  }, [isDarkMode, generateFallingDucks]);
 
   /* -------------------- Render -------------------- */
 
@@ -197,6 +246,24 @@ export const StarBackground = () => {
           }}
         >
           <SleepyDuck size={duck.size} />
+        </div>
+      ))}
+
+      {fallingDucks.map((duck) => (
+        <div
+          key={duck.id}
+          className="absolute animate-duck-fall"
+          style={{
+            left: `${duck.x}%`,
+            top: "-100px",
+            opacity: duck.opacity,
+            visibility: !isDarkMode ? "visible" : "hidden",
+            animationDelay: `${duck.delay}ms`,
+            "--rotation-degrees": `${duck.rotation}deg`,
+            "--flip-scale": duck.flip ? -1 : 1,
+          }}
+        >
+          <FallingRubberDuck size={duck.size} />
         </div>
       ))}
 

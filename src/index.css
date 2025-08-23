@@ -20,6 +20,7 @@
   --animate-blur-out: blur-out 0.8s ease-out forwards;
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
+  --animate-duck-fall: duck-fall 5s linear forwards;
 
   @keyframes pulse-subtitle {
     0%,
@@ -80,6 +81,15 @@
     transform: translateX(calc(100vw + 100px)) rotate(var(--rotation-degrees)) scaleX(var(--flip-scale, 1));
   }
 }
+
+@keyframes duck-fall {
+    0% {
+      transform: translateY(-100px) rotate(0deg) scaleX(var(--flip-scale, 1));
+    }
+    100% {
+      transform: translateY(calc(100vh + 200px)) rotate(var(--rotation-degrees)) scaleX(var(--flip-scale, 1));
+    }
+  }
 
   @keyframes clouds-loop-1 {
     to {
