@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -17,10 +17,9 @@
   --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
   --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
   --animate-blur-in: blur-in 0.8s ease-out forwards;
-   --animate-blur-out: blur-out 0.8s ease-out forwards;
+  --animate-blur-out: blur-out 0.8s ease-out forwards;
   --animate-meteor: meteor 5s linear infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
-  --animate-cloud: cloud 30s linear forwards;
 
   @keyframes pulse-subtitle {
     0%,
@@ -32,26 +31,26 @@
     }
   }
   @keyframes blur-in {
-  0% {
-    filter: blur(8px);
-    opacity: 0;
+    0% {
+      filter: blur(8px);
+      opacity: 0;
+    }
+    100% {
+      filter: blur(0px);
+      opacity: 1;
+    }
   }
-  100% {
-    filter: blur(0px);
-    opacity: 1;
-  }
-}
 
-@keyframes blur-out {
-  0% {
-    filter: blur(0px);
-    opacity: 1;
+  @keyframes blur-out {
+    0% {
+      filter: blur(0px);
+      opacity: 1;
+    }
+    100% {
+      filter: blur(8px);
+      opacity: 0;
+    }
   }
-  100% {
-    filter: blur(8px);
-    opacity: 0;
-  }
-}
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -74,44 +73,41 @@
     }
   }
   @keyframes duck-spin {
-    0% {
-      transform: translateX(-100px) rotate(0deg);
-    }
-    100% {
-      transform: translateX(calc(100vw + 100px)) rotate(360deg);
-    }
+  0% {
+    transform: translateX(-100px) rotate(0deg) scaleX(var(--flip-scale, 1));
   }
-
+  100% {
+    transform: translateX(calc(100vw + 100px)) rotate(var(--rotation-degrees)) scaleX(var(--flip-scale, 1));
+  }
+}
 
   @keyframes clouds-loop-1 {
-  to {
-    background-position: -1000px 0;
+    to {
+      background-position: -1000px 0;
+    }
+  }
+
+  @keyframes clouds-loop-2 {
+    to {
+      background-position: -1000px 0;
+    }
+  }
+
+  @keyframes clouds-loop-3 {
+    to {
+      background-position: -1579px 0;
+    }
   }
 }
-
-@keyframes clouds-loop-2 {
-  to {
-    background-position: -1000px 0;
-  }
-}
-
-@keyframes clouds-loop-3 {
-  to {
-    background-position: -1579px 0;
-  }
-}
-}
-
 
 @layer base {
   :root {
-    /* Light mode (Option 2: High Contrast Clean) */
-    --background: 29.69, 53.01%, 64.12%;
+    --background: 223.33, 10.23%, 65.49%;
     --foreground: 52, 93.75%, 93.73%;
-    --card: 28.21, 67.11%, 44.12%;
+    --card: 200, 25.98%, 24.9%;
     --border: 214, 32%, 91%;
-    --primary: 95.29, 34.69%, 80.78%;
-    --primary-foreground: 210, 40%, 98%;
+    --primary: 0, 0%, 83.92%;
+    --primary-foreground: 52, 93.75%, 93.73%;
   }
   .dark {
     --border: 320, 37%, 56%;
@@ -124,8 +120,9 @@
   }
   * {
     @apply border-border;
-    transition: border-color 1000ms ease, background-color 300ms ease, color 300ms ease;
-     font-family: "WDXL Lubrifont TC", sans-serif;
+    transition: border-color 1000ms ease, background-color 300ms ease,
+      color 300ms ease;
+    font-family: "WDXL Lubrifont TC", sans-serif;
   }
 
   html {
@@ -144,9 +141,9 @@
     font-feature-settings: "rlig 1," "calt 1";
     overscroll-behavior: none;
   }
+
   nav {
     transition: background-color 300ms ease !important;
-
   }
 }
 

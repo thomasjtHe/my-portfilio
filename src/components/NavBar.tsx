@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { cn } from "../lib/utils";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Orbit, Earth } from "lucide-react";
 import { useTheme } from "../hooks/useTheme";
 
 export const NavBar = () => {
@@ -28,9 +28,9 @@ export const NavBar = () => {
 
   // Midpoint-based active section detection
   useEffect(() => {
-    const sectionIds = navItems.map(i => i.href.slice(1));
+    const sectionIds = navItems.map((i) => i.href.slice(1));
     const sections: HTMLElement[] = sectionIds
-      .map(id => document.getElementById(id) as HTMLElement | null)
+      .map((id) => document.getElementById(id) as HTMLElement | null)
       .filter((el): el is HTMLElement => !!el);
 
     if (!sections.length) return;
@@ -40,7 +40,10 @@ export const NavBar = () => {
       const viewportMid = window.scrollY + window.innerHeight / 2;
 
       // Handle near-bottom edge case: if scrolled to bottom, force last section active
-      if (Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 2) {
+      if (
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight - 2
+      ) {
         setActiveSection(sections[sections.length - 1].id);
         return;
       }
@@ -90,22 +93,39 @@ export const NavBar = () => {
       <div className="container flex items-center justify-between">
         {/* Theme Toggle */}
         <div className="text-sm font-medium text-foreground/80">
-          <button
+          {/* Theme Toggle Switch */}
+          <div
+            className="relative w-16 h-8 bg-foreground/10 rounded-full flex items-center cursor-pointer"
             onClick={toggleTheme}
-            aria-label="Toggle Theme"
-            className="p-1 rounded-md hover:bg-foreground/5 transition-colors"
+            role="switch"
+            aria-checked={isDarkMode}
           >
-            {!isDarkMode ? (
-              <Sun className="h-6 w-6 text-card cursor-pointer hover:text-foreground transition-colors duration-300" />
-            ) : (
-              <Moon className="h-6 w-6 text-primary cursor-pointer hover:text-foreground transition-colors duration-300" />
-            )}
-          </button>
+            <Orbit
+              className={cn(
+                "absolute left-1 top-1/2 -translate-y-1/2 h-6 w-6 transition-transform duration-300 text-primary",
+                isDarkMode ? "translate-x-0" : "translate-x-1"
+              )}
+            />
+
+            <Earth
+              className={cn(
+                "absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 transition-transform duration-300 text-primary",
+                isDarkMode ? "-translate-x-1" : "translate-x-0"
+              )}
+            />
+
+            <div
+              className={cn(
+                "absolute w-7 h-7 bg-primary rounded-full shadow-md transition-transform duration-300",
+                isDarkMode ? "translate-x-8" : "translate-x-1"
+              )}
+            />
+          </div>
         </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-end space-x-2">
-          {navItems.map(item => {
+          {navItems.map((item) => {
             const id = item.href.slice(1);
             const isActive = activeSection === id;
             return (
@@ -124,8 +144,8 @@ export const NavBar = () => {
                 {item.name}
                 <span
                   className={cn(
-                  "pointer-events-none absolute left-1/2 -translate-x-1/2 -bottom-1 h-[2px] w-0 rounded bg-primary transition-all duration-300",
-                  isActive ? "w-6" : undefined
+                    "pointer-events-none absolute left-1/2 -translate-x-1/2 -bottom-1 h-[2px] w-0 rounded bg-primary transition-all duration-300",
+                    isActive ? "w-6" : undefined
                   )}
                 />
               </a>
@@ -135,7 +155,7 @@ export const NavBar = () => {
 
         {/* Mobile Toggle */}
         <button
-          onClick={() => setIsOpen(p => !p)}
+          onClick={() => setIsOpen((p) => !p)}
           className="md:hidden p-2 text-foreground z-50"
           aria-label={isOpen ? "Close Menu" : "Open Menu"}
         >
@@ -146,11 +166,13 @@ export const NavBar = () => {
         <div
           className={cn(
             "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center transition-opacity duration-300 md:hidden",
-            isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            isOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
           )}
         >
           <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map(item => {
+            {navItems.map((item) => {
               const id = item.href.slice(1);
               const isActive = activeSection === id;
               return (

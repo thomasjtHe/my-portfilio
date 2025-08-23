@@ -16,8 +16,8 @@ type MeteorProps = {
   x: number;
   y: number;
   size: number;
-  delay: number;    
-  duration: number;  
+  delay: number;
+  duration: number;
 };
 
 type TravelingDuckProps = {
@@ -25,13 +25,17 @@ type TravelingDuckProps = {
   y: number;
   size: number;
   opacity: number;
+  rotation: number;
+  flip: boolean;
 };
 
 export const StarBackground = () => {
   const { isDarkMode } = useTheme();
   const [stars, setStars] = useState<StarProps[]>([]);
   const [meteors, setMeteors] = useState<MeteorProps[]>([]);
-  const [travelingDucks, setTravelingDucks] = useState<TravelingDuckProps[]>([]);
+  const [travelingDucks, setTravelingDucks] = useState<TravelingDuckProps[]>(
+    []
+  );
 
   const idCounter = useRef(0);
   const nextId = () => ++idCounter.current;
@@ -61,29 +65,33 @@ export const StarBackground = () => {
     const count = 6;
     const newMeteors: MeteorProps[] = [];
     for (let i = 0; i < count; i++) {
-      const duration = Math.random() * 3 + 3;          // 3 - 6 s
+      const duration = Math.random() * 3 + 3; // 3 - 6 s
       const progressOffset = Math.random() * duration; // seconds into the flight
       newMeteors.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 50,
         size: Math.random() * 3 + 1,
-        delay: -progressOffset,  // negative so it starts mid-flight
+        delay: -progressOffset, // negative so it starts mid-flight
         duration,
       });
     }
     setMeteors(newMeteors);
   }, []);
 
-  const createTravelingDuck = useCallback(
-    (): TravelingDuckProps => ({
+  const createTravelingDuck = useCallback((): TravelingDuckProps => {
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1; // 1 for clockwise, -1 for anticlockwise
+    const rotationDegrees = Math.random() * (450 - 300) + 300; // Random value between 300 and 450
+    const flip = Math.random() > 0.5; // Randomly decide if the duck should be flipped
+    return {
       id: nextId(),
       y: Math.random() * 60 + 5,
       size: Math.random() * 20 + 80,
       opacity: 0.7,
-    }),
-    []
-  );
+      rotation: rotationDirection * rotationDegrees,
+      flip,
+    };
+  }, []);
 
   /* -------------------- Effects -------------------- */
 
@@ -128,8 +136,7 @@ export const StarBackground = () => {
       const duck = createTravelingDuck();
       setTravelingDucks((prev) => [...prev, duck]);
       setTimeout(
-        () =>
-          setTravelingDucks((prev) => prev.filter((d) => d.id !== duck.id)),
+        () => setTravelingDucks((prev) => prev.filter((d) => d.id !== duck.id)),
         60000
       );
     }, 5000);
@@ -166,15 +173,12 @@ export const StarBackground = () => {
             style={{
               left: `${m.x}%`,
               top: `${m.y}%`,
-              width: `${m.size * 45}px`,
+              width: `${m.size * 50}px`,
               height: `${Math.max(2, m.size * 0.5)}px`,
               background:
                 "linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0))",
-              borderRadius: "999px",
-              boxShadow: "0 0 6px 2px rgba(255,255,255,0.5)",
               animationDuration: `${m.duration}s`,
-              animationDelay: `${m.delay}s`, // negative => starts mid-flight
-              animationTimingFunction: "linear",
+              animationDelay: `${m.delay}s`, 
             }}
           />
         ))}
@@ -188,6 +192,8 @@ export const StarBackground = () => {
             top: `${duck.y}%`,
             opacity: duck.opacity,
             visibility: isDarkMode ? "visible" : "hidden",
+            "--rotation-degrees": `${duck.rotation}deg`,
+            "--flip-scale": duck.flip ? -1 : 1, // Pass flip scale as a CSS variable
           }}
         >
           <SleepyDuck size={duck.size} />
@@ -197,8 +203,8 @@ export const StarBackground = () => {
       {!isDarkMode && (
         <div className="clouds">
           <div className="clouds-1"></div>
-            <div className="clouds-2"></div>
-            <div className="clouds-3"></div>
+          <div className="clouds-2"></div>
+          <div className="clouds-3"></div>
         </div>
       )}
     </div>
