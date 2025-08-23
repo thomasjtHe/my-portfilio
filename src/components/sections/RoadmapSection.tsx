@@ -92,7 +92,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date={<span className="text-xl">Now</span>}
+          date="Now"
           iconStyle={{
             background: `hsl(var(--card))`,
             display: "flex",
@@ -120,7 +120,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date={<span className="text-xl">July 2024 - December 2024</span>}
+          date="July 2024 - December 2024"
           iconStyle={{
             background: `hsl(var(--card))`,
             display: "flex",
@@ -165,7 +165,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date={<span className="text-xl">March 2024 - July 2025</span>}
+          date="March 2024 - July 2025"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/unimelb.png" />}
         >
@@ -203,7 +203,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date={<span className="text-xl">August 2023 - December 2023</span>}
+          date="August 2023 - December 2023"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/aia.png" />}
         >
@@ -238,7 +238,7 @@ export const RoadmapSection = () => {
             background: `hsla(var(--primary), 10%)`,
             color: `hsl(var(--foreground))`,
           }}
-          date={<span className="text-xl">March 2021 - December 2023</span>}
+          date="March 2021 - December 2023"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
           icon={<img src="/src/assets/unimelb.png" />}
         >
