@@ -19,9 +19,8 @@
   --animate-blur-in: blur-in 0.8s ease-out forwards;
    --animate-blur-out: blur-out 0.8s ease-out forwards;
   --animate-meteor: meteor 5s linear infinite;
-  --animate-duck-wiggle: duck-wiggle 2s ease-in-out infinite;
   --animate-duck-spin: duck-spin 30s linear forwards;
-
+  --animate-cloud: cloud 30s linear forwards;
 
   @keyframes pulse-subtitle {
     0%,
@@ -46,7 +45,7 @@
 @keyframes blur-out {
   0% {
     filter: blur(0px);
-    opacity: 100;
+    opacity: 1;
   }
   100% {
     filter: blur(8px);
@@ -83,28 +82,36 @@
     }
   }
 
-  @keyframes duck-wiggle {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(15deg);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
+
+  @keyframes clouds-loop-1 {
+  to {
+    background-position: -1000px 0;
   }
 }
 
+@keyframes clouds-loop-2 {
+  to {
+    background-position: -1000px 0;
+  }
+}
+
+@keyframes clouds-loop-3 {
+  to {
+    background-position: -1579px 0;
+  }
+}
+}
+
+
 @layer base {
   :root {
-    --border: 80, 65%, 65%;
-    --background: 209, 13%, 86%;
-    --foreground: 220, 18%, 26%;
-
-    --primary: 45, 68%, 60%;
+    /* Light mode (Option 2: High Contrast Clean) */
+    --background: 29.69, 53.01%, 64.12%;
+    --foreground: 52, 93.75%, 93.73%;
+    --card: 28.21, 67.11%, 44.12%;
+    --border: 214, 32%, 91%;
+    --primary: 95.29, 34.69%, 80.78%;
     --primary-foreground: 210, 40%, 98%;
-    --card: 80, 63%, 80%;
   }
   .dark {
     --border: 320, 37%, 56%;
@@ -214,4 +221,42 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
+}
+
+/* imported cloud effects */
+.clouds {
+  opacity: 0.4;
+  pointer-events: none;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+
+.clouds-1,
+.clouds-2,
+.clouds-3 {
+  background-repeat: repeat-x;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 500px;
+}
+
+.clouds-1 {
+  background-image: url("https://s.cdpn.io/15514/clouds_2.png");
+  animation: clouds-loop-1 20s infinite linear;
+}
+
+.clouds-2 {
+  background-image: url("https://s.cdpn.io/15514/clouds_1.png");
+  animation: clouds-loop-2 15s infinite linear;
+}
+
+.clouds-3 {
+  background-image: url("https://s.cdpn.io/15514/clouds_3.png");
+  animation: clouds-loop-3 17s infinite linear;
 }

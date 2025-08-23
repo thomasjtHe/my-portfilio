@@ -90,7 +90,7 @@ export const AboutSection = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="space-y-6 text-left">
-            <p className="text-foreground">
+            <div className="text-foreground">
               <div className="subtitle inline text-primary">I am</div> currently 21 y/o and just graduated from university. My study
               focus was on Artificial Intelleigence where I experimented with{" "}
               <div className="text-2xl inline text-primary">
@@ -116,7 +116,7 @@ export const AboutSection = () => {
               collaborating with my peers, learning from people who are more
               experienced than me to deliver products that will come in handy
               and be impressive to our end users.
-            </p>
+            </div>
             <div className="text-center">
               <a
               href="src/assets/Jinting_He_Resume.pdf"

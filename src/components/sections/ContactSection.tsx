@@ -144,7 +144,7 @@ export const ContactSection = () => {
 
         <div className="flex flex-row flex-wrap justify-center items-center gap-6 mb-10">
           <div className="group relative">
-            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
               <div className="p-4 text-3xl text-red-500">
                 <SiGmail />
               </div>
@@ -157,7 +157,7 @@ export const ContactSection = () => {
           </div>
 
           <div className="group relative">
-            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
               <div className="p-4 text-3xl text-gray-200">
                 <FaGithub />
               </div>
@@ -177,7 +177,7 @@ export const ContactSection = () => {
           </div>
 
           <div className="group relative">
-            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
               <div className="p-4 text-3xl text-[#0077B5]">
                 <FaLinkedinIn />
               </div>
@@ -197,7 +197,7 @@ export const ContactSection = () => {
           </div>
 
           <div className="group relative">
-            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
               <div className="p-4 text-3xl text-[#5865F2]">
                 <FaDiscord />
               </div>
@@ -210,9 +210,9 @@ export const ContactSection = () => {
           </div>
 
           <div className="group relative">
-            <div className="flex items-center bg-card/80 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 min-w-0">
+            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
               <div className="p-4 text-3xl text-white">
-                <FileUser />
+                <FileUser className="h-8 w-8"/>
               </div>
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-16 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">

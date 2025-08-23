@@ -83,8 +83,8 @@ export const NavBar = () => {
   return (
     <nav
       className={cn(
-        "fixed left-0 top-0 w-full bg-background transition-all duration-300 z-40",
-        isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
+        "fixed left-0 top-0 w-full bg-background/0 transition-all duration-300 z-40",
+        isScrolled ? "py-3 bg-background/20 backdrop-blur-md shadow-xs" : "py-5"
       )}
     >
       <div className="container flex items-center justify-between">
@@ -96,9 +96,9 @@ export const NavBar = () => {
             className="p-1 rounded-md hover:bg-foreground/5 transition-colors"
           >
             {!isDarkMode ? (
-              <Sun className="h-6 w-6 text-yellow-300 hover:text-foreground transition-colors duration-300" />
+              <Sun className="h-6 w-6 text-card cursor-pointer hover:text-foreground transition-colors duration-300" />
             ) : (
-              <Moon className="h-6 w-6 text-primary hover:text-foreground transition-colors duration-300" />
+              <Moon className="h-6 w-6 text-primary cursor-pointer hover:text-foreground transition-colors duration-300" />
             )}
           </button>
         </div>
