@@ -41,15 +41,22 @@ type FallingDuckProps = {
 
 export const StarBackground = () => {
   const { isDarkMode } = useTheme();
+  const [itemsVisible, setItemsVisible] = useState(false);
+  const [cloudsVisible, setCloudsVisible] = useState(false);
   const [stars, setStars] = useState<StarProps[]>([]);
   const [meteors, setMeteors] = useState<MeteorProps[]>([]);
   const [travelingDucks, setTravelingDucks] = useState<TravelingDuckProps[]>(
     []
   );
   const [fallingDucks, setFallingDucks] = useState<FallingDuckProps[]>([]);
-
   const idCounter = useRef(0);
   const nextId = () => ++idCounter.current;
+
+  // Delay to wait for the theme switch animation to finish (ms).
+  // Adjust to match your theme-switch animation duration (e.g. 600ms).
+  const THEME_ANIMATION_DELAY = 600;
+  const timersRef = useRef<number[]>([]);
+  const intervalsRef = useRef<number[]>([]);
 
   /* -------------------- Generators -------------------- */
 
@@ -125,6 +132,64 @@ export const StarBackground = () => {
 
   /* -------------------- Effects -------------------- */
 
+  // Initialize stars + meteors on dark mode change (delayed to wait for theme animation)
+  useEffect(() => {
+    // clear any pending timers for safety
+    timersRef.current.forEach((t) => clearTimeout(t));
+    timersRef.current = [];
+    setItemsVisible(false);
+    if (isDarkMode) {
+      const t = window.setTimeout(() => {
+        generateStars();
+        generateMeteors();
+        // show items with fade after a tiny extra delay
+        const vis = window.setTimeout(() => setItemsVisible(true), 50);
+        timersRef.current.push(vis);
+      }, THEME_ANIMATION_DELAY);
+      timersRef.current.push(t);
+    } else {
+      // leaving dark mode: clear stars/meteors immediately (or you can fade them out)
+      setStars([]);
+      setMeteors([]);
+      setItemsVisible(false);
+    }
+    return () => {
+      timersRef.current.forEach((t) => clearTimeout(t));
+      timersRef.current = [];
+    };
+  }, [isDarkMode, generateStars, generateMeteors]);
+
+  // Initialize falling ducks on light mode (delayed)
+  useEffect(() => {
+    // only schedule falling ducks when leaving dark mode.
+    // do NOT clear shared timersRef here (it may hold stars/meteor timers).
+    setItemsVisible(false);
+    setCloudsVisible(false);
+    if (!isDarkMode) {
+      const t = window.setTimeout(() => {
+        generateFallingDucks();
+        const vis = window.setTimeout(() => setItemsVisible(true), 50);
+        timersRef.current.push(vis);
+        // show clouds a bit after ducks/items become visible
+        const cloudTimer = window.setTimeout(() => setCloudsVisible(true), 220);
+        timersRef.current.push(cloudTimer);
+      }, THEME_ANIMATION_DELAY);
+      timersRef.current.push(t);
+      return () => {
+        clearTimeout(t);
+        // remove it from timersRef for cleanliness
+        timersRef.current = timersRef.current.filter((id) => id !== t);
+        // ensure clouds hidden on cleanup
+        setCloudsVisible(false);
+      };
+    } else {
+      setFallingDucks([]);
+      setItemsVisible(false);
+      setCloudsVisible(false);
+      return;
+    }
+  }, [isDarkMode, generateFallingDucks]);
+
   // Visibility reset
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -137,21 +202,6 @@ export const StarBackground = () => {
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
-
-  // Initialize stars + meteors on dark mode change
-  useEffect(() => {
-    if (isDarkMode) {
-      generateStars();
-      generateMeteors();
-    }
-  }, [isDarkMode, generateStars, generateMeteors]);
-
-  // Initialize falling ducks on light mode
-  useEffect(() => {
-    if (!isDarkMode) {
-      generateFallingDucks();
-    }
-  }, [isDarkMode, generateFallingDucks]);
 
   // Window resize (throttled)
   useEffect(() => {
@@ -170,27 +220,60 @@ export const StarBackground = () => {
 
   // Traveling ducks every 5s (always, but only visible in dark mode)
   useEffect(() => {
-    const interval = setInterval(() => {
-      const duck = createTravelingDuck();
-      setTravelingDucks((prev) => [...prev, duck]);
-      setTimeout(
-        () => setTravelingDucks((prev) => prev.filter((d) => d.id !== duck.id)),
-        60000
-      );
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [createTravelingDuck]);
+    // start interval only after theme animation delay to avoid ducks appearing mid-theme-switch
+    // store timeout and interval IDs in refs for cleanup
+    const startTimer = window.setTimeout(() => {
+      const intervalId = window.setInterval(() => {
+        if (!isDarkMode) return; // only create while dark mode
+        const duck = createTravelingDuck();
+        setTravelingDucks((prev) => [...prev, duck]);
+        const removeTimer = window.setTimeout(
+          () => setTravelingDucks((prev) => prev.filter((d) => d.id !== duck.id)),
+          60000
+        );
+        timersRef.current.push(removeTimer);
+      }, 5000);
+      intervalsRef.current.push(intervalId);
+    }, THEME_ANIMATION_DELAY);
+    timersRef.current.push(startTimer); // timeout id should go to timersRef
+
+    return () => {
+      // clear both timeouts and intervals
+      intervalsRef.current.forEach((id) => clearInterval(id));
+      timersRef.current.forEach((t) => clearTimeout(t));
+      // keep arrays intact for other effects; remove only the ones we created above
+      intervalsRef.current = [];
+      timersRef.current = [];
+    };
+  }, [createTravelingDuck, isDarkMode]);
 
   // Falling ducks cycle (only in light mode)
   useEffect(() => {
+    // start cycle after a small delay so ducks don't appear during theme animation
     if (isDarkMode) return;
-    
-    const interval = setInterval(() => {
+    const startId = window.setTimeout(() => {
       generateFallingDucks();
-    }, 15000); // Restart cycle every 15 seconds (5s animation + 10s gap)
-    
-    return () => clearInterval(interval);
+      const intervalId = window.setInterval(() => {
+        generateFallingDucks();
+      }, 15000);
+      intervalsRef.current.push(intervalId);
+    }, THEME_ANIMATION_DELAY);
+    timersRef.current.push(startId);
+    return () => {
+      // clear only what this effect created
+      intervalsRef.current.forEach((id) => clearInterval(id));
+      clearTimeout(startId);
+      // leave timersRef for other owners
+    };
   }, [isDarkMode, generateFallingDucks]);
+
+  // cleanup on unmount
+  useEffect(() => {
+    return () => {
+      intervalsRef.current.forEach((id) => clearInterval(id));
+      timersRef.current.forEach((t) => clearTimeout(t));
+    };
+  }, []);
 
   /* -------------------- Render -------------------- */
 
@@ -207,7 +290,9 @@ export const StarBackground = () => {
               width: `${s.size}px`,
               height: `${s.size}px`,
               backgroundColor: "white",
-              opacity: s.opacity,
+              opacity: itemsVisible ? s.opacity : 0,
+              transform: itemsVisible ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 420ms ease, transform 420ms ease",
               borderRadius: "50%",
               animationDuration: `${s.duration}s`,
             }}
@@ -227,7 +312,10 @@ export const StarBackground = () => {
               background:
                 "linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0))",
               animationDuration: `${m.duration}s`,
-              animationDelay: `${m.delay}s`, 
+              animationDelay: `${m.delay}s`,
+              opacity: itemsVisible ? 1 : 0,
+              transform: itemsVisible ? "translateX(0)" : "translateX(-8px)",
+              transition: "opacity 780ms ease, transform 780ms ease",
             }}
           />
         ))}
@@ -239,10 +327,12 @@ export const StarBackground = () => {
           style={{
             left: "-100px",
             top: `${duck.y}%`,
-            opacity: duck.opacity,
+            opacity: itemsVisible && isDarkMode ? duck.opacity : 0,
             visibility: isDarkMode ? "visible" : "hidden",
+            transform: itemsVisible ? "translateX(0) scaleY(1)" : "translateX(-12px) scaleY(0.98)",
+            transition: "opacity 1020ms ease, transform 1020ms ease",
             "--rotation-degrees": `${duck.rotation}deg`,
-            "--flip-scale": duck.flip ? -1 : 1, 
+            "--flip-scale": duck.flip ? -1 : 1,
           } as React.CSSProperties & Record<string, any>}
         >
           <SleepyDuck size={duck.size} />
@@ -256,8 +346,10 @@ export const StarBackground = () => {
           style={{
             left: `${duck.x}%`,
             top: "-100px",
-            opacity: duck.opacity,
+            opacity: itemsVisible && !isDarkMode ? duck.opacity : 0,
             visibility: !isDarkMode ? "visible" : "hidden",
+            transform: itemsVisible ? "translateY(0) scaleY(1)" : "translateY(-6px) scaleY(0.99)",
+            transition: "opacity 1020ms ease, transform 1020ms ease",
             animationDelay: `${duck.delay}ms`,
             "--rotation-degrees": `${duck.rotation}deg`,
             "--flip-scale": duck.flip ? -1 : 1,
@@ -268,10 +360,42 @@ export const StarBackground = () => {
       ))}
 
       {!isDarkMode && (
-        <div className="clouds">
-          <div className="clouds-1"></div>
-          <div className="clouds-2"></div>
-          <div className="clouds-3"></div>
+        <div
+          className="clouds"
+          style={{
+            pointerEvents: "none",
+            opacity: cloudsVisible ? 1 : 0,
+            transform: cloudsVisible ? "translateY(0)" : "translateY(8px)",
+            transition: "opacity 600ms ease, transform 600ms ease",
+          }}
+        >
+          <div
+            className="clouds-1"
+            style={{
+              opacity: cloudsVisible ? 0.5 : 0,
+              transform: cloudsVisible ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 700ms ease, transform 700ms ease",
+              transitionDelay: "100ms",
+            }}
+          />
+          <div
+            className="clouds-2"
+            style={{
+              opacity: cloudsVisible ? 0.5 : 0,
+              transform: cloudsVisible ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 750ms ease, transform 750ms ease",
+              transitionDelay: "220ms",
+            }}
+          />
+          <div
+            className="clouds-3"
+            style={{
+              opacity: cloudsVisible ? 0.5 : 0,
+              transform: cloudsVisible ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 800ms ease, transform 800ms ease",
+              transitionDelay: "320ms",
+            }}
+          />
         </div>
       )}
     </div>

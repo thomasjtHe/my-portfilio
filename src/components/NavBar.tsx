@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { cn } from "../lib/utils";
 import { Menu, X, Orbit, Earth } from "lucide-react";
 import { useTheme } from "../hooks/useTheme";
+import { ThemeAnimationType, useModeAnimation } from "react-theme-switch-animation";
 
 export const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -9,6 +10,9 @@ export const NavBar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const scrollTicking = useRef(false);
   const { isDarkMode, toggleTheme } = useTheme();
+  const { ref: modeRef, toggleSwitchTheme } = useModeAnimation({
+    animationType: ThemeAnimationType.BLUR_CIRCLE,
+  });
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -93,12 +97,18 @@ export const NavBar = () => {
       <div className="container flex items-center justify-between">
         {/* Theme Toggle */}
         <div className="text-sm font-medium text-foreground/80">
-          {/* Theme Toggle Switch */}
-          <div
+          {/* Theme Toggle Switch (animated) */}
+          <button
+            ref={modeRef}
             className="relative w-16 h-8 bg-foreground/10 rounded-full flex items-center cursor-pointer"
-            onClick={toggleTheme}
+            onClick={() => {
+              toggleSwitchTheme();
+              toggleTheme();
+            }}
             role="switch"
             aria-checked={isDarkMode}
+            type="button"
+            tabIndex={0}
           >
             <Orbit
               className={cn(
@@ -120,7 +130,7 @@ export const NavBar = () => {
                 isDarkMode ? "translate-x-8" : "translate-x-1"
               )}
             />
-          </div>
+          </button>
         </div>
 
         {/* Desktop Nav */}
