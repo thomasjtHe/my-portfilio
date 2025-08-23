@@ -6,7 +6,7 @@ import { ProjectCard, type ProjectProps } from "../cards/ProjectCard";
 export const ProjectSection = () => {
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
-  const [expandedIndex, setExpandedIndex] = useState(-1);
+  const [expandedIndex, setExpandedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -130,6 +130,7 @@ export const ProjectSection = () => {
                   // keep minWidth so it never hits 0 during interpolation
                   minWidth: isExpanded ? "100%" : "260px",
                 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
                 className={`relative`}
                 style={{
                   alignSelf: "flex-start",

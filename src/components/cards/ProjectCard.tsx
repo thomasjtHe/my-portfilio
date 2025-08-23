@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export type ProjectProps = {
   name: string;
@@ -26,16 +26,15 @@ export const ProjectCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Function to truncate description to first 20 words
-  const truncateDescription = (text: string, wordLimit: number = 20) => {
+  const truncateDescription = (text: string, wordLimit: number = 10) => {
     const words = text.split(' ');
+    console.log(`Description has ${words.length} words, limit is ${wordLimit}, truncated: ${words.length > wordLimit}`); // Debug log
     if (words.length <= wordLimit) {
       return text;
     }
     return words.slice(0, wordLimit).join(' ') + '...';
   };
 
-  // Stable interval (consider pausing when not visible if performance matters)
   useEffect(() => {
     if (project.imageSrc.length <= 1) return;
     const interval = setInterval(() => {
@@ -49,20 +48,19 @@ export const ProjectCard = ({
     onExpand?.(!isExpanded);
     onClick?.();
     
-    // Re-enable content after animation completes
     setTimeout(() => {
       setIsAnimating(false);
-    }, 1000); // Match the animation duration
+    }, 1500); 
   };
 
-  // Heights for smooth animation (you can tune these)
+
   const COLLAPSED_IMAGE_HEIGHT = 128; 
 
   return (
     <div
       className={`
         flex-shrink-0 flex justify-center items-center relative 
-        transition-all duration-1000 ease-in-out cursor-pointer
+        transition-all duration-1500 ease-in-out cursor-pointer
         ${isExpanded ? "flex-1 w-full" : "w-80"}
       `}
       onClick={handleCardClick}
@@ -74,36 +72,37 @@ export const ProjectCard = ({
     >
       <div
         className={`
-          transition-all duration-1000 ease-in-out transform origin-center
+          transition-all duration-1500 ease-in-out transform origin-center
           ${isExpanded ? "w-full max-w-6xl" : "w-72"}
         `}
       >
         <div
           className={`
             bg-background/50 backdrop-blur-sm rounded-xl p-6
-            shadow-2xl transition-all duration-1000 ease-in-out w-full overflow-hidden
+            shadow-2xl transition-all duration-1500 ease-in-out w-full overflow-hidden
             ${isExpanded 
               ? "h-auto min-h-96 shadow-3xl bg-card/70" 
-              : "h-64 hover:scale-105 hover:shadow-xl"
+              : "h-auto hover:scale-105 hover:shadow-xl"
             }
           `}
           style={{
             border: isExpanded 
               ? "1px solid hsl(var(--primary) / 0.3)" 
-              : "1px solid hsl(var(--border))"
+              : "1px solid hsl(var(--border))",
+            minHeight: isExpanded ? "384px" : "280px"
           }}
         >
           {/* Use one consistent flex container; switch direction & gaps only */}
           <div
             className={`
-              flex transition-all duration-1000 ease-in-out h-full
-              ${isExpanded ? "flex-row gap-6" : "flex-col"}
+              flex transition-all duration-1500 ease-in-out h-full
+              ${isExpanded ? "flex-row gap-6" : "flex-col gap-3"}
             `}
           >
             {/* Image Container */}
             <div
               className={`
-                relative overflow-hidden rounded-lg transition-all duration-1000 ease-in-out animate-blur-in
+                relative overflow-hidden rounded-lg flex-shrink-0
                 ${isExpanded ? "w-1/2" : "w-full"}
               `}
               style={{
@@ -134,7 +133,7 @@ export const ProjectCard = ({
               <div
                 className={`
                   pointer-events-none absolute inset-0 bg-gradient-to-r 
-                  from-black/60 via-black/20 to-transparent transition-opacity duration-1000 ease-in-out
+                  from-black/60 via-black/20 to-transparent
                   ${isExpanded ? "opacity-100" : "opacity-0"}
                 `}
               />
@@ -152,9 +151,9 @@ export const ProjectCard = ({
             {/* Content Container */}
             <div
               className={`
-                transition-all duration-1000 ease-in-out
-                flex flex-col overflow-hidden
-                ${isExpanded ? "w-1/2 text-left py-4 pl-6" : "w-full text-center"}
+                transition-all duration-1500 ease-in-out
+                flex flex-col flex-grow
+                ${isExpanded ? "w-1/2 text-left py-4 pl-6" : "w-full text-center pt-3"}
                 ${isAnimating ? "opacity-0 pointer-events-none" : "opacity-100"}
               `}
             >
@@ -162,8 +161,8 @@ export const ProjectCard = ({
                 <>
                   <h3
                     className={`
-                      font-bold transition-all duration-300 ease-in-out
-                      ${isExpanded ? "text-3xl md:text-4xl text-primary mb-4" : "text-xl text-primary mb-2"}
+                      font-bold transition-all duration-500 ease-in-out
+                      ${isExpanded ? "text-3xl md:text-4xl text-primary mb-4" : "text-lg text-primary mb-2"}
                     `}
                   >
                     {project.name}
@@ -171,16 +170,16 @@ export const ProjectCard = ({
 
                   <p
                     className={`
-                      text-foreground/70 transition-all duration-300 ease-in-out
-                      ${isExpanded ? "text-base md:text-lg leading-relaxed mb-6" : "text-sm mb-2"}
+                      text-foreground/70 transition-all duration-500 ease-in-out
+                      ${isExpanded ? "text-base md:text-lg leading-relaxed mb-6" : "text-sm leading-relaxed"}
                     `}
                   >
-                    {isExpanded ? project.description : truncateDescription(project.description)}
+                    {isExpanded ? project.description : truncateDescription(project.description, 15)}
                   </p>
 
                   {/* Additional content when expanded */}
                   {isExpanded && (
-                    <div className="transition-all duration-300 ease-in-out">
+                    <div className="transition-all duration-500 ease-in-out">
                       <div className="mb-6">
                         <h4 className="text-sm font-semibold text-foreground/80 mb-3">
                           Technologies Used:
