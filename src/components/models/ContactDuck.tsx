@@ -36,7 +36,7 @@ export function ContactDuck({
   }, [scene, onLoad]);
 
   // Animation frame hook for smooth spinning
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * rotationSpeed;
     }
