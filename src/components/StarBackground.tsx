@@ -242,8 +242,8 @@ export const StarBackground = () => {
             opacity: duck.opacity,
             visibility: isDarkMode ? "visible" : "hidden",
             "--rotation-degrees": `${duck.rotation}deg`,
-            "--flip-scale": duck.flip ? -1 : 1, // Pass flip scale as a CSS variable
-          }}
+            "--flip-scale": duck.flip ? -1 : 1, 
+          } as React.CSSProperties & Record<string, any>}
         >
           <SleepyDuck size={duck.size} />
         </div>
@@ -261,7 +261,7 @@ export const StarBackground = () => {
             animationDelay: `${duck.delay}ms`,
             "--rotation-degrees": `${duck.rotation}deg`,
             "--flip-scale": duck.flip ? -1 : 1,
-          }}
+          } as React.CSSProperties & Record<string, any>}
         >
           <FallingRubberDuck size={duck.size} />
         </div>
