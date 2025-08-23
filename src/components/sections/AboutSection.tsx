@@ -119,7 +119,7 @@ export const AboutSection = () => {
             </div>
             <div className="text-center">
               <a
-              href="src/assets/Jinting_He_Resume.pdf"
+              href="/assets/Jinting_He_Resume.pdf"
               className="pdf-link cosmic-button rounded-full border-primary hover:bg-primary/50 transition-colors duration-300"
               target="_blank"
             >

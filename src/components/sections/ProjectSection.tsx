@@ -17,7 +17,7 @@ export const ProjectSection = () => {
   const projects: ProjectProps[] = [
     {
       name: "Motivational Modelling",
-      imageSrc: ["/src/assets/mm.png", "/src/assets/mm2.webp"],
+      imageSrc: ["/assets/mm.png", "/assets/mm2.webp"],
       description:
         "Motivational Model Editor is an app that helps users create and visualize motivational models. My job was to develop and improve several functionalities enhance UI and debug issues. Throughout the internship I engaged closely with both my fellow developers and senior stakeholders to guarantee high-quality production.",
       link: "https://www.leonsterling.com/aboutmotivationalmodelling",
@@ -26,11 +26,11 @@ export const ProjectSection = () => {
     {
       name: "Algorithms in Action",
       imageSrc: [
-        "/src/assets/AIA1.png",
-        "/src/assets/AIA2.png",
-        "/src/assets/AIA3.png",
-        "/src/assets/AIA4.png",
-        "/src/assets/AIA5.png",
+        "/assets/AIA1.png",
+        "/assets/AIA2.png",
+        "/assets/AIA3.png",
+        "/assets/AIA4.png",
+        "/assets/AIA5.png",
       ],
       description:
         "Algorithms in Action (AIA) is an animation software tool, developed for the purposes of teaching computer science algorithms by the teaching staff and students at The University of Melbourne. My role was to work as a developer to add several algorithm including BFS, DFS and Dijkstra's to the pool of available animations. I also worked as a product owner, who was responsible for bridging the clients with the dev team.",
@@ -40,17 +40,17 @@ export const ProjectSection = () => {
     {
       name: "Sustain-a-Bite",
       imageSrc: [
-        "/src/assets/SAB1.png",
-        "/src/assets/SAB2.png",
-        "/src/assets/SAB3.png",
-        "/src/assets/SAB4.png",
-        "/src/assets/SAB5.png",
-        "/src/assets/SAB6.png",
+        "/assets/SAB1.png",
+        "/assets/SAB2.png",
+        "/assets/SAB3.png",
+        "/assets/SAB4.png",
+        "/assets/SAB5.png",
+        "/assets/SAB6.png",
       ],
       description:
         "A student innovation project that aims to promote sustainable food practices and reduce food waste. The team went through a process of interviewing stakeholders and conducting research to identify key areas for improvement, then developing a product type, demonstrating its use, and gathering feedback. Through rounds of prototyping and testing, the team refined their solution to better meet the needs of users.",
       skills: ["Figma", "Jira"],
-      link: "/src/assets/SABVideo.mp4",
+      link: "/assets/SABVideo.mp4",
     },
   ];
 

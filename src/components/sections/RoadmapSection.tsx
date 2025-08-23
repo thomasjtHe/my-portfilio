@@ -128,7 +128,7 @@ export const RoadmapSection = () => {
             justifyContent: "center",
             color: "#fff",
           }}
-          icon={<img src="/src/assets/qs.png" className="w-10 h-10" />}
+          icon={<img src="/assets/qs.png" className="w-10 h-10" />}
         >
           <h3 className="vertical-timeline-element-title font-bold text-2xl">
             Junior Software Engineer
@@ -167,7 +167,7 @@ export const RoadmapSection = () => {
           }}
           date="March 2024 - July 2025"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
-          icon={<img src="/src/assets/unimelb.png" />}
+          icon={<img src="/assets/unimelb.png" />}
         >
           <h3 className="vertical-timeline-element-title font-bold text-2xl">
             Master of Information Technology
@@ -205,7 +205,7 @@ export const RoadmapSection = () => {
           }}
           date="August 2023 - December 2023"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
-          icon={<img src="/src/assets/aia.png" />}
+          icon={<img src="/assets/aia.png" />}
         >
           <h3 className="vertical-timeline-element-title font-bold text-2xl">
             Algorithms in Action
@@ -240,7 +240,7 @@ export const RoadmapSection = () => {
           }}
           date="March 2021 - December 2023"
           iconStyle={{ background: `hsl(var(--card))`, color: "#fff" }}
-          icon={<img src="/src/assets/unimelb.png" />}
+          icon={<img src="/assets/unimelb.png" />}
         >
           <h3 className="vertical-timeline-element-title font-bold text-2xl">
             Bachelor of Science

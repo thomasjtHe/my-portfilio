@@ -217,7 +217,7 @@ export const ContactSection = () => {
               <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-16 group-hover:animate-blur-in">
                 <div className="pr-6 whitespace-nowrap">
                   <a
-                    href="src/assets/Jinting_He_Resume.pdf"
+                    href="/assets/Jinting_He_Resume.pdf"
                     target="_blank"
                     rel="noreferrer"
                     className="text-md hover:underline"
