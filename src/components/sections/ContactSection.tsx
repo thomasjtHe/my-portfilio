@@ -5,12 +5,13 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { ContactDuck } from "../models/ContactDuck";
 import { useState, useEffect, useMemo } from "react";
-import { FileUser, PhoneIncoming } from "lucide-react";
+import { FileUser, PhoneIncoming, ExternalLink, Copy } from "lucide-react";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
   const [duckVisible, setDuckVisible] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
+  const [openCard, setOpenCard] = useState<string | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,6 +25,14 @@ export const ContactSection = () => {
       setTimeout(() => setDuckVisible(true), 100);
     }
   }, [duckLoading]);
+
+  const toggleCard = (cardId: string) => {
+    setOpenCard(openCard === cardId ? null : cardId);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
 
   const canvasComponent = useMemo(
     () => (
@@ -142,94 +151,383 @@ export const ContactSection = () => {
           </div>
         </div>
 
-        <div className="flex flex-row flex-wrap justify-center items-center gap-6 mb-10">
-          <div className="group relative">
-            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
-              <div className="p-4 text-3xl text-red-500">
+        {/* Desktop Version */}
+        <div className="hidden md:flex flex-row flex-wrap justify-center items-center gap-6 mb-10">
+          <div
+            className={`group relative cursor-pointer ${
+              openCard === "email" ? "z-10" : ""
+            }`}
+            onClick={() => toggleCard("email")}
+          >
+            <div
+              className={`flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out min-w-0 ${
+                openCard === "email" ? "bg-card/65" : "group-hover:bg-card/65"
+              }`}
+            >
+              <div className="p-4 text-3xl text-red-500 flex-shrink-0">
                 <SiGmail />
               </div>
-              <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
-                <div className="pr-6 whitespace-nowrap">
+              <div
+                className={`overflow-hidden transition-all duration-300 text-center ease-out ${
+                  openCard === "email"
+                    ? "w-60 animate-blur-in"
+                    : "w-0 group-hover:w-60 group-hover:animate-blur-in"
+                }`}
+              >
+                <div className="pr-6 whitespace-nowrap flex items-center justify-center gap-2">
                   <span className="text-md">thomashe42@gmail.com</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copyToClipboard("thomashe42@gmail.com");
+                    }}
+                    className="flex-shrink-0 p-1 hover:bg-primary/20 rounded transition-colors"
+                    title="Copy email"
+                  >
+                    <Copy className="w-4 h-4 cursor-pointer" />
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="group relative">
-            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
-              <div className="p-4 text-3xl text-gray-200">
+          <div
+            className={`group relative cursor-pointer ${
+              openCard === "github" ? "z-10" : ""
+            }`}
+            onClick={() => toggleCard("github")}
+          >
+            <div
+              className={`flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out min-w-0 ${
+                openCard === "github" ? "bg-card/65" : "group-hover:bg-card/65"
+              }`}
+            >
+              <div className="p-4 text-3xl text-gray-200 flex-shrink-0">
                 <FaGithub />
               </div>
-              <div className="overflow-hidden transition-all duration-300 text-center ease-out w-0 group-hover:w-48 group-hover:animate-blur-in">
-                <div className="pr-6 whitespace-nowrap">
+              <div
+                className={`overflow-hidden transition-all duration-300 text-center ease-out ${
+                  openCard === "github"
+                    ? "w-60 animate-blur-in"
+                    : "w-0 group-hover:w-60 group-hover:animate-blur-in"
+                }`}
+              >
+                <div className="pr-6 whitespace-nowrap flex items-center justify-center gap-2">
                   <a
                     href="https://github.com/thomasjtHe"
                     target="_blank"
                     rel="noreferrer"
                     className="text-md hover:underline"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     github.com/thomasjtHe
                   </a>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="group relative">
-            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
-              <div className="p-4 text-3xl text-[#0077B5]">
+          <div
+            className={`group relative cursor-pointer ${
+              openCard === "linkedin" ? "z-10" : ""
+            }`}
+            onClick={() => toggleCard("linkedin")}
+          >
+            <div
+              className={`flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out min-w-0 ${
+                openCard === "linkedin" ? "bg-card/65" : "group-hover:bg-card/65"
+              }`}
+            >
+              <div className="p-4 text-3xl text-[#0077B5] flex-shrink-0">
                 <FaLinkedinIn />
               </div>
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-72 group-hover:animate-blur-in">
-                <div className="pr-6 whitespace-nowrap">
+              <div
+                className={`overflow-hidden transition-all duration-300 text-right ease-out ${
+                  openCard === "linkedin"
+                    ? "w-80 animate-blur-in"
+                    : "w-0 group-hover:w-80 group-hover:animate-blur-in"
+                }`}
+              >
+                <div className="pr-6 whitespace-nowrap flex items-center justify-end gap-2">
                   <a
                     href="https://www.linkedin.com/in/thomas-he-8ba66336a"
                     target="_blank"
                     rel="noreferrer"
                     className="text-md hover:underline"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     www.linkedin.com/in/thomas-he-8ba66336a
                   </a>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="group relative">
-            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
-              <div className="p-4 text-3xl text-[#5865F2]">
+          <div
+            className={`group relative cursor-pointer ${
+              openCard === "discord" ? "z-10" : ""
+            }`}
+            onClick={() => toggleCard("discord")}
+          >
+            <div
+              className={`flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out min-w-0 ${
+                openCard === "discord" ? "bg-card/65" : "group-hover:bg-card/65"
+              }`}
+            >
+              <div className="p-4 text-3xl text-[#5865F2] flex-shrink-0">
                 <FaDiscord />
               </div>
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-32 group-hover:animate-blur-in">
-                <div className="pr-6 whitespace-nowrap text-center">
+              <div
+                className={`overflow-hidden transition-all duration-300 text-right ease-out ${
+                  openCard === "discord"
+                    ? "w-40 animate-blur-in"
+                    : "w-0 group-hover:w-40 group-hover:animate-blur-in"
+                }`}
+              >
+                <div className="pr-6 whitespace-nowrap text-center flex items-center justify-center gap-2">
                   <span className="text-md">chillaxx</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copyToClipboard("chillaxx");
+                    }}
+                    className="flex-shrink-0 p-1 hover:bg-primary/20 rounded transition-colors"
+                    title="Copy username"
+                  >
+                    <Copy className="w-4 h-4 cursor-pointer" />
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="group relative">
-            <div className="flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/65 min-w-0">
-              <div className="p-4 text-3xl text-black">
-                <FileUser className="h-8 w-8"/>
+          <div
+            className={`group relative cursor-pointer ${
+              openCard === "resume" ? "z-10" : ""
+            }`}
+            onClick={() => toggleCard("resume")}
+          >
+            <div
+              className={`flex items-center bg-card/30 backdrop-blur-sm rounded-full shadow-lg transition-all duration-300 ease-out min-w-0 ${
+                openCard === "resume" ? "bg-card/65" : "group-hover:bg-card/65"
+              }`}
+            >
+              <div className="p-4 text-3xl text-black flex-shrink-0">
+                <FileUser className="h-8 w-8" />
               </div>
-              <div className="overflow-hidden transition-all duration-300 text-right ease-out w-0 group-hover:w-16 group-hover:animate-blur-in">
-                <div className="pr-6 whitespace-nowrap">
+              <div
+                className={`overflow-hidden transition-all duration-300 text-right ease-out ${
+                  openCard === "resume"
+                    ? "w-36 animate-blur-in"
+                    : "w-0 group-hover:w-36 group-hover:animate-blur-in"
+                }`}
+              >
+                <div className="pr-6 whitespace-nowrap flex items-center justify-center gap-2">
                   <a
                     href="/assets/Jinting_He_Resume.pdf"
                     target="_blank"
                     rel="noreferrer"
                     className="text-md hover:underline"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     Resume
                   </a>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div> 
+
+        {/* Mobile Version */}
+        <div className="md:hidden flex flex-col items-center gap-4 mb-10">
+          <div
+            className={`bg-card/30 backdrop-blur-sm p-4 rounded-xl shadow-lg transition-all duration-300 ease-out w-3/4 max-w-xs cursor-pointer ${
+              openCard === "email" ? "bg-card/65" : ""
+            }`}
+            onClick={() => toggleCard("email")}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-full bg-red-500/10 border-2 border-red-500/20 flex-shrink-0">
+                <SiGmail className="text-red-500 w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-semibold">Email</h4>
+            </div>
+            <div
+              className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "email"
+                  ? "max-h-20 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-background/50 rounded-lg p-2 mt-2 border border-border/20 hover:bg-background/70 transition-colors duration-200">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm break-all flex-1">
+                    thomashe42@gmail.com
+                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copyToClipboard("thomashe42@gmail.com");
+                    }}
+                    className="flex-shrink-0 p-1 hover:bg-primary/20 rounded transition-colors"
+                    title="Copy email"
+                  >
+                    <Copy className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`bg-card/30 backdrop-blur-sm p-4 rounded-xl shadow-lg transition-all duration-300 ease-out w-3/4 max-w-xs cursor-pointer ${
+              openCard === "github" ? "bg-card/65" : ""
+            }`}
+            onClick={() => toggleCard("github")}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-full bg-gray-200/10 border-2 border-gray-200/20 flex-shrink-0">
+                <FaGithub className="text-gray-200 w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-semibold">GitHub</h4>
+            </div>
+            <div
+              className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "github"
+                  ? "max-h-20 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-background/50 rounded-lg p-2 mt-2 border border-border/20 hover:bg-background/70 transition-colors duration-200">
+                <a
+                  href="https://github.com/thomasjtHe"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between gap-2 group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span className="text-sm break-all flex-1 group-hover:underline">
+                    github.com/thomasjtHe
+                  </span>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`bg-card/30 backdrop-blur-sm p-4 rounded-xl shadow-lg transition-all duration-300 ease-out w-3/4 max-w-xs cursor-pointer ${
+              openCard === "linkedin" ? "bg-card/65" : ""
+            }`}
+            onClick={() => toggleCard("linkedin")}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-full bg-[#0077B5]/10 border-2 border-[#0077B5]/20 flex-shrink-0">
+                <FaLinkedinIn className="text-[#0077B5] w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-semibold">LinkedIn</h4>
+            </div>
+            <div
+              className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "linkedin"
+                  ? "max-h-20 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-background/50 rounded-lg p-2 mt-2 border border-border/20 hover:bg-background/70 transition-colors duration-200">
+                <a
+                  href="https://www.linkedin.com/in/thomas-he-8ba66336a"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between gap-2 group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span className="text-sm break-all flex-1 group-hover:underline">
+                    www.linkedin.com/in/thomas-he-8ba66336a
+                  </span>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`bg-card/30 backdrop-blur-sm p-4 rounded-xl shadow-lg transition-all duration-300 ease-out w-3/4 max-w-xs cursor-pointer ${
+              openCard === "discord" ? "bg-card/65" : ""
+            }`}
+            onClick={() => toggleCard("discord")}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-full bg-[#5865F2]/10 border-2 border-[#5865F2]/20 flex-shrink-0">
+                <FaDiscord className="text-[#5865F2] w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-semibold">Discord</h4>
+            </div>
+            <div
+              className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "discord"
+                  ? "max-h-20 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-background/50 rounded-lg p-2 mt-2 border border-border/20 hover:bg-background/70 transition-colors duration-200">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm flex-1">chillaxx</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      copyToClipboard("chillaxx");
+                    }}
+                    className="flex-shrink-0 p-1 hover:bg-primary/20 rounded transition-colors"
+                    title="Copy username"
+                  >
+                    <Copy className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`bg-card/30 backdrop-blur-sm p-4 rounded-xl shadow-lg transition-all duration-300 ease-out w-3/4 max-w-xs cursor-pointer ${
+              openCard === "resume" ? "bg-card/65" : ""
+            }`}
+            onClick={() => toggleCard("resume")}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-full bg-black/10 border-2 border-black/20 flex-shrink-0">
+                <FileUser className="text-black w-6 h-6" />
+              </div>
+              <h4 className="text-lg font-semibold">Resume</h4>
+            </div>
+            <div
+              className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "resume"
+                  ? "max-h-20 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="bg-background/50 rounded-lg p-2 mt-2 border border-border/20 hover:bg-background/70 transition-colors duration-200">
+                <a
+                  href="/assets/Jinting_He_Resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between gap-2 group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span className="text-sm flex-1 group-hover:underline">
+                    Download My Resume
+                  </span>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0 text-primary" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
