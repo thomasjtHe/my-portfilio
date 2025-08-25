@@ -25,6 +25,17 @@ export const ProjectCard = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const truncateDescription = (text: string, wordLimit: number = 10) => {
     const words = text.split(" ");
@@ -71,7 +82,7 @@ export const ProjectCard = ({
       <div
         className={`
           transition-all duration-1500 ease-in-out transform origin-center
-          ${isExpanded ? "w-full max-w-6xl" : "w-72"}
+          ${isExpanded ? "w-full max-w-4xl" : "w-72"}
         `}
       >
         <div
@@ -88,27 +99,27 @@ export const ProjectCard = ({
             border: isExpanded
               ? "1px solid hsl(var(--primary) / 0.3)"
               : "1px solid hsl(var(--border))",
-            minHeight: isExpanded ? "384px" : "280px",
+            minHeight: isExpanded ? "500px" : "280px",
           }}
         >
           <div
             className={`
               flex transition-all duration-1500 ease-in-out h-full
-              ${isExpanded ? "flex-row gap-6" : "flex-col gap-3"}
+              ${isExpanded ? "flex-col gap-6" : "flex-col gap-3"}
             `}
           >
             {/* Image Container */}
             <div
               className={`
                 relative overflow-hidden rounded-lg flex-shrink-0
-                ${isExpanded ? "w-1/2" : "w-full"}
+                ${isExpanded ? "w-full" : "w-full"}
               `}
               style={{
-                height: isExpanded ? "100%" : `${COLLAPSED_IMAGE_HEIGHT}px`,
-                minHeight: isExpanded ? "400px" : `${COLLAPSED_IMAGE_HEIGHT}px`,
+                height: isExpanded ? "300px" : `${COLLAPSED_IMAGE_HEIGHT}px`,
+                minHeight: isExpanded ? "300px" : `${COLLAPSED_IMAGE_HEIGHT}px`,
               }}
             >
-              {/* A static background */}
+              {/* Project images */}
               {project.imageSrc.map((src, imgIndex) => (
                 <img
                   key={imgIndex}
@@ -122,7 +133,7 @@ export const ProjectCard = ({
                         ? "opacity-100"
                         : "opacity-0"
                     }
-                    ${!isExpanded && !isHovered ? "blur-sm" : "blur-none"}
+                    ${!isExpanded && !isMobile && !isHovered ? "blur-sm" : "blur-none"}
                   `}
                   onError={(e) => {
                     e.currentTarget.style.opacity = "0";
@@ -134,8 +145,8 @@ export const ProjectCard = ({
               {/* Overlay gradient when expanded */}
               <div
                 className={`
-                  pointer-events-none absolute inset-0 bg-gradient-to-r 
-                  from-black/60 via-black/20 to-transparent
+                  pointer-events-none absolute inset-0 bg-gradient-to-b 
+                  from-black/40 via-transparent to-black/60
                   ${isExpanded ? "opacity-100" : "opacity-0"}
                 `}
               />
@@ -144,7 +155,7 @@ export const ProjectCard = ({
               {!isExpanded && (
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black/20">
                   <div className="bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                    Click to expand
+                    {isMobile ? "Tap to expand" : "Click to expand"}
                   </div>
                 </div>
               )}
@@ -157,7 +168,7 @@ export const ProjectCard = ({
                 flex flex-col flex-grow
                 ${
                   isExpanded
-                    ? "w-1/2 text-left py-4 pl-6"
+                    ? "w-full text-left py-0"
                     : "w-full text-center pt-3"
                 }
                 ${isAnimating ? "opacity-0 pointer-events-none" : "opacity-100"}
@@ -170,7 +181,7 @@ export const ProjectCard = ({
                       font-bold transition-all duration-500 ease-in-out
                       ${
                         isExpanded
-                          ? "text-3xl md:text-4xl text-primary mb-4"
+                          ? "text-2xl md:text-3xl text-primary mb-4"
                           : "text-lg text-primary mb-2"
                       }
                     `}
@@ -183,7 +194,7 @@ export const ProjectCard = ({
                       text-foreground/70 transition-all duration-500 ease-in-out
                       ${
                         isExpanded
-                          ? "text-base md:text-lg leading-relaxed mb-6"
+                          ? "text-sm md:text-base leading-relaxed mb-6"
                           : "text-sm leading-relaxed"
                       }
                     `}
@@ -195,7 +206,7 @@ export const ProjectCard = ({
 
                   {/* Additional content when expanded */}
                   {isExpanded && (
-                    <div className="transition-all duration-500 ease-in-out">
+                    <div className="transition-all duration-500 ease-in-out mt-auto">
                       <div className="mb-6">
                         <h4 className="text-sm font-semibold text-foreground/80 mb-3">
                           Technologies Used:
@@ -212,7 +223,7 @@ export const ProjectCard = ({
                         </div>
                       </div>
 
-                      <div className="flex gap-3 mt-auto">
+                      <div className="flex gap-3">
                         <a
                           href={project.link}
                           target="_blank"

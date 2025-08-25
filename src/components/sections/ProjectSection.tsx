@@ -6,7 +6,7 @@ import { ProjectCard, type ProjectProps } from "../cards/ProjectCard";
 export const ProjectSection = () => {
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
-  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [expandedIndex, setExpandedIndex] = useState(-1); // Start with no cards expanded
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -123,11 +123,9 @@ export const ProjectSection = () => {
                 key={project.name + index}
                 data-card={index}
                 layout
-                // Instead of basis classes that can momentarily resolve to 0, drive via style.
                 initial={false}
                 animate={{
                   flexBasis: isExpanded ? "100%" : "270px",
-                  // keep minWidth so it never hits 0 during interpolation
                   minWidth: isExpanded ? "100%" : "260px",
                 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
