@@ -19,12 +19,14 @@ type SkillCardProps = {
   isCenter: boolean;
   isAdjacent: boolean;
   isVisible: boolean;
+  isMobile: boolean;
   onClick?: () => void;
 };
 
-export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: SkillCardProps) => {
+export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, isMobile, onClick }: SkillCardProps) => {
   const [hoveredMinor, setHoveredMinor] = useState<string | null>(null);
   const [outgoingMinor, setOutgoingMinor] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const prevNameRef = useRef<string | null>(null);
 
   // Track previous name 
@@ -36,21 +38,19 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
     prevNameRef.current = hoveredMinor;
   }, [hoveredMinor]);
 
-  // On mobile, hide non-center cards
-  if (!isVisible || (!isCenter && window.innerWidth < 768)) {
-    return <div className="w-80 flex-shrink-0 md:block hidden" />;
+  if (!isVisible) {
+    return <div className="w-80 flex-shrink-0" />;
   }
 
   // Make the center card occupy a wider slot
-  const slotWidth = isCenter ? 'w-[23rem]' : 'w-80 hidden md:block';
+  const slotWidth = isCenter ? 'w-[23rem]' : 'w-80';
   const bannerVisible = Boolean(hoveredMinor || outgoingMinor);
 
   return (
     <div
       className={`
-        ${slotWidth} flex-shrink-0 flex justify-center px-4
+        ${isMobile ? 'w-full' : slotWidth} flex-shrink-0 flex justify-center px-4
         transition-[width] duration-500 ease-out
-        ${!isCenter ? 'hidden md:flex' : ''}
       `}
       onClick={onClick}
     >
@@ -59,6 +59,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
         className={`
           origin-center transform-gpu transition-transform duration-500 ease-out
           ${isCenter ? 'scale-[1.12] opacity-100 z-10' : isAdjacent ? 'scale-95 opacity-80' : 'scale-90 opacity-60'}
+          ${isMobile ? 'scale-100' : ''}
         `}
       >
         <div
@@ -66,10 +67,13 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
             group card-hover relative bg-background/50 backdrop-blur-sm rounded-xl border border-border
             ${isCenter ? 'shadow-2xl border-primary/20 bg-card/50' : 'shadow-lg border-border/50'}
             ${isCenter ? 'w-80 md:w-[22rem]' : 'w-64'}
+            ${isMobile ? 'w-full max-w-sm' : ''}
             p-6 transition-colors duration-300 ease-out
-            ${isCenter ? 'hover:scale-[1.02]' : ''}
+            ${isCenter && !isMobile ? 'hover:scale-[1.02]' : ''}
+            ${isMobile ? 'cursor-pointer' : ''}
           `}
           role="button"
+          onClick={isMobile ? () => setIsExpanded(!isExpanded) : undefined}
         >
           {/* Skill Image */}
           <div className="flex justify-center mb-4">
@@ -112,11 +116,19 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
             {skill.description}
           </p>
 
-          {/* Minor Skills - only the center card expands on hover */}
+          {/* Mobile tap indicator */}
+          {isMobile && (
+            <p className="text-center text-primary/60 text-xs mb-2">
+              Tap to {isExpanded ? 'hide' : 'view'} skills
+            </p>
+          )}
+
+          {/* Minor Skills - center card expands on hover (desktop) or click (mobile) */}
           <div
             className={`
               overflow-hidden transition-[max-height] duration-500 ease-in-out
-              ${isCenter ? 'max-h-0 group-hover:max-h-[28rem] md:group-hover:max-h-[28rem]' : 'max-h-0'}
+              ${isCenter && !isMobile ? 'max-h-0 group-hover:max-h-[28rem]' : 'max-h-0'}
+              ${isMobile && isExpanded ? 'max-h-[28rem]' : ''}
             `}
           >
             <div
@@ -126,7 +138,8 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
               <div
                 className={`
                   grid grid-cols-3 gap-2
-                  ${isCenter ? 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 md:group-hover:opacity-100 md:group-hover:translate-y-0' : 'opacity-0'}
+                  ${isCenter && !isMobile ? 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0' : 'opacity-0'}
+                  ${isMobile && isExpanded ? 'opacity-100 translate-y-0' : ''}
                   transition-all duration-500 ease-out transform-gpu justify-center items-center
                 `}
               >
@@ -136,15 +149,16 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
                     type="button"
                     className={`
                       flex items-center justify-center p-2 rounded-md bg-background/30
-                      transition-colors duration-200 ${isCenter ? 'hover:bg-background/50' : ''}
+                      transition-colors duration-200 ${(isCenter && !isMobile) || (isMobile && isExpanded) ? 'hover:bg-background/50' : ''}
                       focus:outline-none focus:ring-2 focus:ring-primary/40
                       will-change-transform
                     `}
                     style={{ transitionDelay: `${Math.min(skillIndex * 40, 400)}ms` }}
                     aria-label={minorSkill.name}
-                    onMouseEnter={isCenter ? () => setHoveredMinor(minorSkill.name) : undefined}
-                    onFocus={isCenter ? () => setHoveredMinor(minorSkill.name) : undefined}
-                    disabled={!isCenter}
+                    onMouseEnter={isCenter && !isMobile ? () => setHoveredMinor(minorSkill.name) : undefined}
+                    onFocus={isCenter && !isMobile ? () => setHoveredMinor(minorSkill.name) : undefined}
+                    onClick={isMobile ? (e) => { e.stopPropagation(); setHoveredMinor(minorSkill.name); } : undefined}
+                    disabled={!isCenter && !isMobile}
                   >
                     <img
                       src={minorSkill.imageSrc}

@@ -8,6 +8,16 @@ export const SkillsSection = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,7 +72,7 @@ export const SkillsSection = () => {
       name: "DevOps",
       description:
         "Implementing CI/CD pipelines, source control and documentation.",
-      imageSrc: "/s/devops.png",
+      imageSrc: "/assets/devops.png",
       minorSkills: [
         { id: 1, name: "Git", imageSrc: "/assets/git.png" },
         { id: 2, name: "Github", imageSrc: "/assets/github.svg" },
@@ -141,10 +151,10 @@ export const SkillsSection = () => {
 
   const extendedSkills = getExtendedSkills();
 
-  // Card dimensions 
-  const CARD_SLOT_WIDTH = 320; 
+  // Card dimensions
+  const CARD_SLOT_WIDTH = 320;
   const CARD_GAP = 32;
-  
+
   return (
     <section id="skills" className="min-h-screen py-24 px-4 relative">
       <motion.h2
@@ -182,18 +192,27 @@ export const SkillsSection = () => {
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Cards Container */}
-        <div className="relative w-full max-w-6xl mx-auto px-8 overflow-visible">
+        {/* Desktop Carousel */}
+        <div className="hidden md:block relative w-full max-w-6xl mx-auto px-8 overflow-visible">
           <div
             className="flex items-center gap-8 transition-transform duration-500 ease-out"
             style={{
-              transform: `translateX(${-((majorSkills.length + currentIndex) * (CARD_SLOT_WIDTH + CARD_GAP)) + 360}px)`,
-              width: `${extendedSkills.length * (CARD_SLOT_WIDTH + CARD_GAP)}px`,
+              transform: `translateX(${
+                -(
+                  (majorSkills.length + currentIndex) *
+                  (CARD_SLOT_WIDTH + CARD_GAP)
+                ) + 360
+              }px)`,
+              width: `${
+                extendedSkills.length * (CARD_SLOT_WIDTH + CARD_GAP)
+              }px`,
             }}
           >
             {extendedSkills.map((skill, index) => {
               const actualIndex = index % majorSkills.length;
-              const distanceFromCenter = Math.abs(index - (majorSkills.length + currentIndex));
+              const distanceFromCenter = Math.abs(
+                index - (majorSkills.length + currentIndex)
+              );
               const isCenter = index === majorSkills.length + currentIndex;
               const isAdjacent = distanceFromCenter === 1;
               const isVisible = distanceFromCenter <= 1;
@@ -205,11 +224,24 @@ export const SkillsSection = () => {
                   isCenter={isCenter}
                   isAdjacent={isAdjacent}
                   isVisible={isVisible}
+                  isMobile={false}
                   onClick={() => setCurrentIndex(actualIndex)}
                 />
               );
             })}
           </div>
+        </div>
+
+        {/* Mobile Single Card */}
+        <div className="md:hidden w-full max-w-sm mx-auto px-4">
+          <SkillCard
+            skill={majorSkills[currentIndex]}
+            isCenter={true}
+            isAdjacent={false}
+            isVisible={true}
+            isMobile={true}
+            onClick={() => {}}
+          />
         </div>
       </motion.div>
 
@@ -227,10 +259,13 @@ export const SkillsSection = () => {
             onClick={() => {
               if (!isAnimating && index !== currentIndex) {
                 setIsAnimating(true);
-                setTimeout(() => {
-                  setCurrentIndex(index);
-                  setTimeout(() => setIsAnimating(false), 50);
-                }, 250);
+                setTimeout(
+                  () => {
+                    setCurrentIndex(index);
+                    setTimeout(() => setIsAnimating(false), 50);
+                  },
+                  isMobile ? 0 : 250
+                );
               }
             }}
             disabled={isAnimating}
@@ -247,6 +282,7 @@ export const SkillsSection = () => {
           />
         ))}
       </motion.div>
+
       <div className="flex justify-center mt-20">
         <a
           href="#projects"
