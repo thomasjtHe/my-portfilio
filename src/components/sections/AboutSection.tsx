@@ -14,6 +14,7 @@ export const AboutSection = () => {
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
   const [showIcon2, setShowIcon2] = useState(true);
+  const [openCard, setOpenCard] = useState<string | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,6 +44,10 @@ export const AboutSection = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   });
+
+  const toggleCard = (cardId: string) => {
+    setOpenCard(openCard === cardId ? null : cardId);
+  };
 
   return (
     <section id="about" className="py-24 px-4 relative min-h-screen">
@@ -111,7 +116,7 @@ export const AboutSection = () => {
               applications such as Netflix, Amazon in my spare time. I also
               worked as a{" "}
               <div className="text-2xl inline text-primary">Web Dev Intern</div>{" "}
-              for a total of one year during both my Bachelor’s and Master’s
+              for a total of one year during both my Bachelor's and Master's
               studies. I enjoy solving problems individually as much as I enjoy
               collaborating with my peers, learning from people who are more
               experienced than me to deliver products that will come in handy
@@ -128,15 +133,26 @@ export const AboutSection = () => {
             </div>
             
           </div>
-          <div className="flex flex-col text-foreground items-center justify-center">
-            <div className="flex group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 my-2 min-w-[202px]">
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-primary/10 border-2 border-border">
+
+          {/* Desktop Version */}
+          <div className="hidden md:flex flex-col text-foreground items-center justify-center">
+            <div 
+              className={`flex group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out my-2 min-w-[202px] cursor-pointer overflow-hidden ${
+                openCard === "status" ? "bg-card/95" : "hover:bg-card/95"
+              }`}
+              onClick={() => toggleCard("status")}
+            >
+              <div className="flex items-center gap-4 min-w-0 w-full">
+                <div className="p-3 rounded-full bg-primary/10 border-2 border-border flex-shrink-0">
                   <User className="text-white" />
                 </div>
-                <h4 className="text-lg font-semibold justify-center">Status</h4>
-                <div className="transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden group-hover:w-[30rem] flex-shrink-0 min-h-20">
-                  <p className="pr-6 line-clamp-3 blur-sm opacity-0 group-hover:blur-none group-hover:opacity-100 transition-all duration-1000 delay-300">
+                <h4 className="text-lg font-semibold justify-center flex-shrink-0">Status</h4>
+                <div className={`transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden flex-shrink-0 min-h-20 ${
+                  openCard === "status" ? "w-[30rem]" : "group-hover:w-[30rem]"
+                }`}>
+                  <p className={`pr-6 line-clamp-3 transition-all duration-1000 delay-300 ${
+                    openCard === "status" ? "blur-none opacity-100" : "blur-sm opacity-0 group-hover:blur-none group-hover:opacity-100"
+                  }`}>
                     Based in Melbourne, currently actively seeking career
                     opportunities across Australia. Open to remote positions
                     Australia-wide or in-person/hybrid roles in Melbourne.
@@ -145,9 +161,14 @@ export const AboutSection = () => {
               </div>
             </div>
 
-            <div className="group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 my-2 min-w-[202px]">
-              <div className="flex items-center gap-4 ">
-                <div className="p-3 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden">
+            <div 
+              className={`group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out my-2 min-w-[202px] cursor-pointer overflow-hidden ${
+                openCard === "experience" ? "bg-card/95" : "hover:bg-card/95"
+              }`}
+              onClick={() => toggleCard("experience")}
+            >
+              <div className="flex items-center gap-4 min-w-0 w-full">
+                <div className="p-3 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden flex-shrink-0">
                   <div
                     className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
                     style={{
@@ -174,9 +195,13 @@ export const AboutSection = () => {
                   </div>
                 </div>
 
-                <h4 className="text-lg font-semibold">Experience</h4>
-                <div className="transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden group-hover:w-[30rem] flex-shrink-0 min-h-20">
-                  <p className="pr-6 line-clamp-4 blur-sm opacity-0 group-hover:blur-none group-hover:opacity-100 transition-all duration-1000 delay-300">
+                <h4 className="text-lg font-semibold flex-shrink-0">Experience</h4>
+                <div className={`transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden flex-shrink-0 min-h-20 ${
+                  openCard === "experience" ? "w-[30rem]" : "group-hover:w-[30rem]"
+                }`}>
+                  <p className={`pr-6 line-clamp-4 transition-all duration-1000 delay-300 ${
+                    openCard === "experience" ? "blur-none opacity-100" : "blur-sm opacity-0 group-hover:blur-none group-hover:opacity-100"
+                  }`}>
                     Strong academic foundation in machine learning with hands-on
                     project experience in key deep learning domains including
                     Computer Vision and Natural Language Processing. One year of
@@ -186,9 +211,15 @@ export const AboutSection = () => {
                 </div>
               </div>
             </div>
-            <div className="group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out group-hover:bg-card/95 my-2 min-w-[202px]">
-              <div className="flex items-center gap-4 ">
-                <div className="p-3 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden">
+
+            <div 
+              className={`group bg-card/50 backdrop-blur-sm p-6 card-hover rounded-full shadow-lg transition-all duration-300 ease-out my-2 min-w-[202px] cursor-pointer overflow-hidden ${
+                openCard === "languages" ? "bg-card/95" : "hover:bg-card/95"
+              }`}
+              onClick={() => toggleCard("languages")}
+            >
+              <div className="flex items-center gap-4 min-w-0 w-full">
+                <div className="p-3 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden flex-shrink-0">
                   <div
                     className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
                     style={{
@@ -215,42 +246,189 @@ export const AboutSection = () => {
                   </div>
                 </div>
 
-                <h4 className="text-lg font-semibold whitespace-nowrap">
+                <h4 className="text-lg font-semibold whitespace-nowrap flex-shrink-0">
                   Languages
                 </h4>
-                <div className="transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden group-hover:w-[30rem] flex-shrink-0 h-20">
+                <div className={`transition-all duration-500 ease-out w-0 min-w-0 overflow-hidden flex-shrink-0 h-20 ${
+                  openCard === "languages" ? "w-[30rem]" : "group-hover:w-[30rem]"
+                }`}>
                   <div className="grid grid-cols-5 auto-rows-min gap-2 pr-6">
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       HTML
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       CSS
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       JavaScript
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       Java
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xltext-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       C
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       Python
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       MySQL
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       R
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       English
                     </div>
-                    <div className="px-3 py-1 bg-background rounded-xl text-center opacity-0 group-hover:opacity-100 group-hover:animate-blur-in">
+                    <div className={`px-3 py-1 bg-background rounded-xl text-center ${
+                      openCard === "languages" ? "opacity-100 animate-blur-in" : "opacity-0 group-hover:opacity-100 group-hover:animate-blur-in"
+                    }`}>
                       Mandarin
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Version */}
+          <div className="md:hidden flex flex-col text-foreground items-center justify-center space-y-4">
+            <div 
+              className={`bg-card/50 backdrop-blur-sm p-4 card-hover rounded-xl shadow-lg transition-all duration-300 ease-out w-full cursor-pointer ${
+                openCard === "status" ? "bg-card/95" : ""
+              }`}
+              onClick={() => toggleCard("status")}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 rounded-full bg-primary/10 border-2 border-border flex-shrink-0">
+                  <User className="text-white w-5 h-5" />
+                </div>
+                <h4 className="text-lg font-semibold">Status</h4>
+              </div>
+              <div className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "status" ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+              }`}>
+                <p className="text-sm mt-2 px-2">
+                  Based in Melbourne, currently actively seeking career
+                  opportunities across Australia. Open to remote positions
+                  Australia-wide or in-person/hybrid roles in Melbourne.
+                </p>
+              </div>
+            </div>
+
+            <div 
+              className={`bg-card/50 backdrop-blur-sm p-4 card-hover rounded-xl shadow-lg transition-all duration-300 ease-out w-full cursor-pointer ${
+                openCard === "experience" ? "bg-card/95" : ""
+              }`}
+              onClick={() => toggleCard("experience")}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden flex-shrink-0">
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: showIcon2
+                        ? "translateX(0%)"
+                        : "translateX(-100%)",
+                    }}
+                  >
+                    <Briefcase className="text-white w-5 h-5" />
+                  </div>
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: showIcon2
+                        ? "translateX(100%)"
+                        : "translateX(0%)",
+                    }}
+                  >
+                    <GraduationCap className="text-white w-5 h-5" />
+                  </div>
+                  <div className="invisible">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                </div>
+                <h4 className="text-lg font-semibold">Experience</h4>
+              </div>
+              <div className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "experience" ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+              }`}>
+                <p className="text-sm mt-2 px-2">
+                  Strong academic foundation in machine learning with hands-on
+                  project experience in key deep learning domains including
+                  Computer Vision and Natural Language Processing. One year of
+                  working experience as a software engineer focusing on UI/UX
+                  design and web development.
+                </p>
+              </div>
+            </div>
+
+            <div 
+              className={`bg-card/50 backdrop-blur-sm p-4 card-hover rounded-xl shadow-lg transition-all duration-300 ease-out w-full cursor-pointer ${
+                openCard === "languages" ? "bg-card/95" : ""
+              }`}
+              onClick={() => toggleCard("languages")}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="p-2 rounded-full bg-primary/10 border-2 border-border relative overflow-hidden flex-shrink-0">
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: showIcon2
+                        ? "translateX(0%)"
+                        : "translateX(-100%)",
+                    }}
+                  >
+                    <Code className="text-white w-5 h-5" />
+                  </div>
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: showIcon2
+                        ? "translateX(100%)"
+                        : "translateX(0%)",
+                    }}
+                  >
+                    <Languages className="text-white w-5 h-5" />
+                  </div>
+                  <div className="invisible">
+                    <Code className="w-5 h-5" />
+                  </div>
+                </div>
+                <h4 className="text-lg font-semibold">Languages</h4>
+              </div>
+              <div className={`transition-all duration-500 ease-out overflow-hidden ${
+                openCard === "languages" ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+              }`}>
+                <div className="grid grid-cols-3 gap-2 mt-2 px-2">
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">HTML</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">CSS</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">JavaScript</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">Java</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">C</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">Python</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">MySQL</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">R</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">English</div>
+                  <div className="px-2 py-1 bg-background rounded-lg text-center text-xs">Mandarin</div>
                 </div>
               </div>
             </div>
