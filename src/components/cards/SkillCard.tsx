@@ -36,12 +36,13 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
     prevNameRef.current = hoveredMinor;
   }, [hoveredMinor]);
 
-  if (!isVisible) {
-    return <div className="w-80 flex-shrink-0" />;
+  // On mobile, hide non-center cards
+  if (!isVisible || (!isCenter && window.innerWidth < 768)) {
+    return <div className="w-80 flex-shrink-0 md:block hidden" />;
   }
 
   // Make the center card occupy a wider slot
-  const slotWidth = isCenter ? 'w-[23rem]' : 'w-80';
+  const slotWidth = isCenter ? 'w-[23rem]' : 'w-80 hidden md:block';
   const bannerVisible = Boolean(hoveredMinor || outgoingMinor);
 
   return (
@@ -49,6 +50,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
       className={`
         ${slotWidth} flex-shrink-0 flex justify-center px-4
         transition-[width] duration-500 ease-out
+        ${!isCenter ? 'hidden md:flex' : ''}
       `}
       onClick={onClick}
     >
@@ -114,7 +116,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
           <div
             className={`
               overflow-hidden transition-[max-height] duration-500 ease-in-out
-              ${isCenter ? 'max-h-0 group-hover:max-h-[28rem]' : 'max-h-0'}
+              ${isCenter ? 'max-h-0 group-hover:max-h-[28rem] md:group-hover:max-h-[28rem]' : 'max-h-0'}
             `}
           >
             <div
@@ -124,7 +126,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, onClick }: S
               <div
                 className={`
                   grid grid-cols-3 gap-2
-                  ${isCenter ? 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0' : 'opacity-0'}
+                  ${isCenter ? 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 md:group-hover:opacity-100 md:group-hover:translate-y-0' : 'opacity-0'}
                   transition-all duration-500 ease-out transform-gpu justify-center items-center
                 `}
               >
