@@ -86,13 +86,13 @@ export const NavBar = () => {
   return (
     <nav
       className={cn(
-        "fixed left-0 top-0 w-full bg-background/0 transition-all duration-300 z-40",
+        "fixed left-0 top-0 w-full bg-background/0 transition-all duration-300 z-50",
         isScrolled ? "py-3 bg-background/20 backdrop-blur-md shadow-xs" : "py-5"
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-between md:justify-between relative z-50">
         {/* Theme Toggle */}
-        <div className="text-sm font-medium text-foreground/80">
+        <div className="text-sm font-medium text-foreground/80 md:static absolute left-[40px] transform -translate-x-1/2 md:transform-none">
           <button
             ref={modeRef}
             className="relative w-16 h-8 bg-foreground/10 rounded-full flex items-center cursor-pointer"
@@ -161,43 +161,43 @@ export const NavBar = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsOpen((p) => !p)}
-          className="md:hidden p-2 text-foreground z-50"
+          className="md:hidden p-2 text-foreground z-50 relative ml-auto"
           aria-label={isOpen ? "Close Menu" : "Open Menu"}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
+      </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={cn(
-            "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center transition-opacity duration-300 md:hidden",
-            isOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          )}
-        >
-          <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map((item) => {
-              const id = item.href.slice(1);
-              const isActive = activeSection === id;
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  aria-current={isActive ? "page" : undefined}
-                  className={cn(
-                    "mx-4 text-lg font-medium text-center transition-colors duration-300",
-                    isActive
-                      ? "text-primary"
-                      : "text-foreground/80 hover:text-primary"
-                  )}
-                >
-                  {item.name}
-                </a>
-              );
-            })}
-          </div>
+      {/* Mobile Menu - Moved outside container to prevent stacking issues */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-background/95 backdrop-blur-md z-[100] flex flex-col items-center justify-center transition-opacity duration-300 md:hidden",
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        )}
+      >
+        <div className="flex flex-col space-y-8 text-xl">
+          {navItems.map((item) => {
+            const id = item.href.slice(1);
+            const isActive = activeSection === id;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => handleNavClick(item.href)}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "mx-4 text-lg font-medium text-center transition-colors duration-300",
+                  isActive
+                    ? "text-primary"
+                    : "text-foreground/80 hover:text-primary"
+                )}
+              >
+                {item.name}
+              </a>
+            );
+          })}
         </div>
       </div>
     </nav>
