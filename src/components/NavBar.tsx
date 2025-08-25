@@ -23,6 +23,20 @@ export const NavBar = () => {
     { name: "Contact", href: "#contact" },
   ];
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -168,10 +182,10 @@ export const NavBar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu - Moved outside container to prevent stacking issues */}
+      {/* Mobile Menu - Fixed positioning with body scroll lock */}
       <div
         className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-md z-[100] flex flex-col items-center justify-center transition-opacity duration-300 md:hidden",
+          "fixed inset-0 bg-background/95 backdrop-blur-md z-[40] flex flex-col items-center justify-center transition-opacity duration-300 md:hidden",
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
