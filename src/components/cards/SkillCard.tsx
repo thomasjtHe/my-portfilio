@@ -119,7 +119,7 @@ export const SkillCard = ({ skill, isCenter, isAdjacent, isVisible, isMobile, on
           {/* Mobile tap indicator */}
           {isMobile && (
             <p className="text-center text-primary/60 text-xs mb-2">
-              Tap to {isExpanded ? 'hide' : 'view'} skills
+              Tap to {isExpanded ? 'hide' : 'view'} 
             </p>
           )}
 

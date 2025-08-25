@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SkillCard, type MajorSkillProps } from "../cards/SkillCard";
 import { ArrowBigDown, Hammer } from "lucide-react";
 import { motion } from "motion/react";
@@ -9,6 +9,14 @@ export const SkillsSection = () => {
   const [scrolled, setScrolled] = useState(true);
   const [showIcon, setShowIcon] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Touch/swipe state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const touchRef = useRef<HTMLDivElement>(null);
+
+  // Minimum swipe distance required to trigger swipe
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     const checkMobile = () => {
@@ -41,6 +49,47 @@ export const SkillsSection = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Touch handlers for swipe functionality
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isAnimating) return;
+
+    if (isLeftSwipe) {
+      // Swipe left - go to next card
+      const nextIndex = (currentIndex + 1) % majorSkills.length;
+      setIsAnimating(true);
+      setCurrentIndex(nextIndex);
+      setTimeout(() => setIsAnimating(false), 300);
+    }
+
+    if (isRightSwipe) {
+      // Swipe right - go to previous card
+      const prevIndex =
+        currentIndex === 0 ? majorSkills.length - 1 : currentIndex - 1;
+      setIsAnimating(true);
+      setCurrentIndex(prevIndex);
+      setTimeout(() => setIsAnimating(false), 300);
+    }
+
+    // Reset touch state
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   const majorSkills: MajorSkillProps[] = [
     {
@@ -232,16 +281,25 @@ export const SkillsSection = () => {
           </div>
         </div>
 
-        {/* Mobile Single Card */}
-        <div className="md:hidden w-full max-w-sm mx-auto px-4">
-          <SkillCard
-            skill={majorSkills[currentIndex]}
-            isCenter={true}
-            isAdjacent={false}
-            isVisible={true}
-            isMobile={true}
-            onClick={() => {}}
-          />
+        {/* Mobile Single Card with Swipe */}
+        <div
+          className="md:hidden w-full max-w-sm mx-auto px-4"
+          ref={touchRef}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="relative">
+            <SkillCard
+              skill={majorSkills[currentIndex]}
+              isCenter={true}
+              isAdjacent={false}
+              isVisible={true}
+              isMobile={true}
+              onClick={() => {}}
+            />
+
+          </div>
         </div>
       </motion.div>
 
