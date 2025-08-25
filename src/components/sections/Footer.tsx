@@ -20,13 +20,13 @@ export const Footer = () => {
               className="animate-bounce inline-flex items-center mr-[250px] gap-2 "
               aria-label="Back to top"
             >
-              <ArrowBigUp className="h-6 w-6" />
-              <span className="sr-only">Back to Top</span>
+              <ArrowBigUp className="h-6 w-6 hidden md:block" />
+              <span className="sr-only hidden md:block">Back to Top</span>
             </a>
             <a
               href="https://github.com/thomasjtHe/my-portfilio"
               target="_blank"
-              className="text-lg text-muted-foreground select-none self-start sm:self-end"
+              className="text-lg text-muted-foreground select-none self-start hidden md:block"
             >
               Source: <Github className="inline h-6 w-6 ml-2" />
             </a>

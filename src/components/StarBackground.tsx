@@ -49,6 +49,7 @@ export const StarBackground = () => {
     []
   );
   const [fallingDucks, setFallingDucks] = useState<FallingDuckProps[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
   const idCounter = useRef(0);
   const nextId = () => ++idCounter.current;
 
@@ -56,6 +57,16 @@ export const StarBackground = () => {
   const THEME_ANIMATION_DELAY = 600;
   const timersRef = useRef<number[]>([]);
   const intervalsRef = useRef<number[]>([]);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const generateStars = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -80,14 +91,14 @@ export const StarBackground = () => {
     const count = 6;
     const newMeteors: MeteorProps[] = [];
     for (let i = 0; i < count; i++) {
-      const duration = Math.random() * 3 + 3; 
-      const progressOffset = Math.random() * duration; 
+      const duration = Math.random() * 3 + 3;
+      const progressOffset = Math.random() * duration;
       newMeteors.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 50,
         size: Math.random() * 3 + 1,
-        delay: -progressOffset, 
+        delay: -progressOffset,
         duration,
       });
     }
@@ -95,9 +106,9 @@ export const StarBackground = () => {
   }, []);
 
   const createTravelingDuck = useCallback((): TravelingDuckProps => {
-    const rotationDirection = Math.random() > 0.5 ? 1 : -1; 
-    const rotationDegrees = Math.random() * (450 - 300) + 300; 
-    const flip = Math.random() > 0.5; 
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+    const rotationDegrees = Math.random() * (450 - 300) + 300;
+    const flip = Math.random() > 0.5;
     return {
       id: nextId(),
       y: Math.random() * 60 + 5,
@@ -127,8 +138,7 @@ export const StarBackground = () => {
     setFallingDucks(ducks);
   }, []);
 
-
-  // Initialize stars + meteors on dark mode change 
+  // Initialize stars + meteors on dark mode change
   useEffect(() => {
     // clear any pending timers for safety
     timersRef.current.forEach((t) => clearTimeout(t));
@@ -196,7 +206,7 @@ export const StarBackground = () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Window resize 
+  // Window resize
   useEffect(() => {
     if (!isDarkMode) return;
     let frame = 0;
@@ -216,7 +226,7 @@ export const StarBackground = () => {
     // store timeout and interval IDs in refs for cleanup
     const startTimer = window.setTimeout(() => {
       const intervalId = window.setInterval(() => {
-        if (!isDarkMode) return; 
+        if (!isDarkMode) return;
         const duck = createTravelingDuck();
         setTravelingDucks((prev) => [...prev, duck]);
         const removeTimer = window.setTimeout(
@@ -310,13 +320,18 @@ export const StarBackground = () => {
       {travelingDucks.map((duck) => (
         <div
           key={duck.id}
-          className="absolute animate-duck-spin"
+          className={`absolute ${
+            isMobile ? "animate-duck-spin-mobile" : "animate-duck-spin"
+          }`}
           style={{
             left: "-100px",
             top: `${duck.y}%`,
             opacity: itemsVisible && isDarkMode ? duck.opacity : 0,
             visibility: isDarkMode ? "visible" : "hidden",
-            transform: itemsVisible ? "translateX(0) scaleY(1)" : "translateX(-12px) scaleY(0.98)",
+            transform:
+              itemsVisible && isDarkMode
+                ? "translateX(0) scaleY(1)"
+                : "translateX(-12px) scaleY(0.98)",
             transition: "opacity 1020ms ease, transform 1020ms ease",
             "--rotation-degrees": `${duck.rotation}deg`,
             "--flip-scale": duck.flip ? -1 : 1,
@@ -329,13 +344,18 @@ export const StarBackground = () => {
       {fallingDucks.map((duck) => (
         <div
           key={duck.id}
-          className="absolute animate-duck-fall"
+          className={`absolute ${
+            isMobile ? "animate-duck-fall-mobile" : "animate-duck-fall"
+          }`}
           style={{
             left: `${duck.x}%`,
             top: "-100px",
             opacity: itemsVisible && !isDarkMode ? duck.opacity : 0,
             visibility: !isDarkMode ? "visible" : "hidden",
-            transform: itemsVisible ? "translateY(0) scaleY(1)" : "translateY(-6px) scaleY(0.99)",
+            transform:
+              itemsVisible && !isDarkMode
+                ? "translateY(0) scaleY(1)"
+                : "translateY(-6px) scaleY(0.99)",
             transition: "opacity 1020ms ease, transform 1020ms ease",
             animationDelay: `${duck.delay}ms`,
             "--rotation-degrees": `${duck.rotation}deg`,
