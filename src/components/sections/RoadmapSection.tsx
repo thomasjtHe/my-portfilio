@@ -110,8 +110,7 @@ export const RoadmapSection = () => {
             Open to Work
           </h3>
           <div className="text-xl mt-2"> 
-            Seeking IT related job opportunities while taking the professional
-            year program to gain experiences <Rocket className="mx-1 inline" />
+            Seeking IT related job opportunities while working on individual projects to gain experiences <Rocket className="mx-1 inline" />
           </div>
         </VerticalTimelineElement>
         <VerticalTimelineElement
