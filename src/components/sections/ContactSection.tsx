@@ -1,17 +1,21 @@
 import { FaGithub, FaLinkedinIn, FaDiscord } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { ContactDuck } from "../models/ContactDuck";
 import { useState, useEffect, useMemo } from "react";
-import { FileUser, PhoneIncoming, ExternalLink, Copy } from "lucide-react";
+import { FileUser, PhoneIncoming, ExternalLink, Copy, Check } from "lucide-react";
 
 export const ContactSection = () => {
   const [duckLoading, setDuckLoading] = useState(true);
   const [duckVisible, setDuckVisible] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
   const [openCard, setOpenCard] = useState<string | null>(null);
+  const [copyNotification, setCopyNotification] = useState<{
+    show: boolean;
+    text: string;
+  }>({ show: false, text: "" });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,7 +35,14 @@ export const ContactSection = () => {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).then(() => {
+      setCopyNotification({ show: true, text: `Copied "${text}" to clipboard` });
+
+      // Hide notification after 2 seconds
+      setTimeout(() => {
+        setCopyNotification({ show: false, text: "" });
+      }, 2000);
+    });
   };
 
   const canvasComponent = useMemo(
@@ -57,6 +68,24 @@ export const ContactSection = () => {
       id="contact"
       className="min-h-screen pt-24 px-4 relative flex flex-col"
     >
+      {/* Copy Notification Toast */}
+      <AnimatePresence>
+        {copyNotification.show && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-15 left-1/2 transform -translate-x-1/2 z-[100] pointer-events-none"
+          >
+            <div className="bg-primary/50 text-primary-foreground px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 backdrop-blur-sm border border-primary/20">
+              <Check className="w-4 h-4" />
+              <span className="text-sm font-medium">Copied to clipboard!</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <motion.h2
         className="text-3xl md:text-4xl font-bold text-center mt-15 "
         initial={{ opacity: 0, y: 50 }}
@@ -294,7 +323,7 @@ export const ContactSection = () => {
                       copyToClipboard("chillaxx");
                     }}
                     className="flex-shrink-0 p-1 hover:bg-primary/20 rounded transition-colors"
-                    title="Copy username"
+                    title="Copy Discord username"
                   >
                     <Copy className="w-4 h-4 cursor-pointer" />
                   </button>
