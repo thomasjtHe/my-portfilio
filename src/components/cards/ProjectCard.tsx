@@ -24,7 +24,7 @@ export const ProjectCard = ({
 }: ProjectCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // Removed isAnimating state for smoother single expand
   const [isMobile, setIsMobile] = useState(false);
 
   // Check if mobile
@@ -54,13 +54,8 @@ export const ProjectCard = ({
   }, [project.imageSrc.length]);
 
   const handleCardClick = () => {
-    setIsAnimating(true);
     onExpand?.(!isExpanded);
     onClick?.();
-
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 1500);
   };
 
   const COLLAPSED_IMAGE_HEIGHT = 128;
@@ -171,11 +166,10 @@ export const ProjectCard = ({
                     ? "w-full text-left py-0"
                     : "w-full text-center pt-3"
                 }
-                ${isAnimating ? "opacity-0 pointer-events-none" : "opacity-100"}
               `}
             >
-              {!isAnimating && (
-                <>
+              {/* Always show content for single expand animation */}
+              <>
                   <h3
                     className={`
                       font-bold transition-all duration-500 ease-in-out
@@ -239,7 +233,6 @@ export const ProjectCard = ({
                     </div>
                   )}
                 </>
-              )}
             </div>
           </div>
         </div>
